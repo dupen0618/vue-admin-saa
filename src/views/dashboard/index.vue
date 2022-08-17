@@ -8,6 +8,7 @@
           <span class="text_3">AIOT五号机</span>
           <img
             class="label_1"
+            @click="proxyImage"
             referrerpolicy="no-referrer"
             src="@/assets/dashboard/img/psb4hbo5wsqnn3x3leqcyhb7tvxrc3cji67440422f2-a997-4ef0-95d5-4c21bbd5c76e.png"
           />
@@ -53,7 +54,12 @@ export default {
       constants: {},
     };
   },
-  methods: {},
+  methods: {
+    proxyImage: function (e) {
+      this.$router.push("/group/user");
+    },
+  },
 };
 </script>
 <style scoped lang="css" src="@/assets/dashboard/index.css" />
+<style scoped></style>

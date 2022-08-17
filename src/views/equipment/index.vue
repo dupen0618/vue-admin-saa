@@ -13,18 +13,19 @@
         v-model="listQuery.startTime"
         type="datetime"
         placeholder="开始时间"
-        style="width: 200px"
+        style="width: 200px; margin-left: 5px"
       />
       <el-date-picker
         v-model="listQuery.endTime"
         type="datetime"
         placeholder="结束时间"
-        style="width: 200px"
+        style="width: 200px; margin-left: 5px"
       />
       <el-button
         v-waves
         class="filter-item"
         type="primary"
+        style="margin-left: 10px"
         icon="el-icon-search"
         @click="handleFilter"
         >查询</el-button
@@ -35,6 +36,7 @@
       v-loading="listLoading"
       :data="list"
       element-loading-text="Loading"
+      style="margin-top: 50px"
       border
       fit
       highlight-current-row

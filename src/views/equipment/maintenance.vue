@@ -12,7 +12,7 @@
         v-model="listQuery.levelId"
         placeholder="保养级别"
         clearable
-        style="width: 120px"
+        style="width: 120px; margin-left: 5px"
         class="filter-item"
       >
         <el-option
@@ -27,19 +27,20 @@
         v-model="listQuery.startTime"
         type="datetime"
         placeholder="开始时间"
-        style="width: 200px"
+        style="width: 200px; margin-left: 5px"
       />
       <el-date-picker
         v-model="listQuery.endTime"
         type="datetime"
         placeholder="结束时间"
-        style="width: 200px"
+        style="width: 200px; margin-left: 5px"
       />
       <el-button
         v-waves
         class="filter-item"
         type="primary"
         icon="el-icon-search"
+        style="margin-left: 10px"
         @click="handleFilter"
         >查询</el-button
       >
@@ -51,30 +52,13 @@
         @click="handleCreate"
         >保养记录登记</el-button
       >
-      <!-- <el-button
-        v-waves
-        :loading="downloadLoading"
-        class="filter-item"
-        type="primary"
-        icon="el-icon-upload2"
-        @click="handleDownload"
-        >保养日期默认值维护</el-button
-      > -->
-      <!-- <el-button
-        v-waves
-        :loading="downloadLoading"
-        class="filter-item"
-        type="primary"
-        icon="el-icon-download"
-        @click="handleDownload"
-        >导出</el-button
-      > -->
     </div>
 
     <el-table
       v-loading="listLoading"
       :data="list"
       element-loading-text="Loading"
+      style="margin-top: 50px"
       border
       fit
       highlight-current-row

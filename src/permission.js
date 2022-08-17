@@ -32,9 +32,16 @@ router.beforeEach(async(to, from, next) => {
       } else {
         try {
           // get user info
-          await store.dispatch('user/getInfo')
-
-          next()
+          await store.dispatch('user/getInfo2').then(res=>{
+            const roles = res.role;
+            store.dispatch('GenerateRoutes', { roles }).then(() => { // 生成可访问的路由表
+              if(roles == 3){
+                store.dispatch('app/toggleSideBar2')
+              }
+              router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+              next({ ...to,replace:true}) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
+            })
+          });
         } catch (error) {
           // remove token and go to login page to re-login
           await store.dispatch('user/resetToken')

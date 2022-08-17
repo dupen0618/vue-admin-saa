@@ -30,65 +30,63 @@ import Layout from '@/layout'
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
-export const constantRoutes = [
+export const constantRouterMap = [
   {
     path: '/login',
     component: () => import('@/views/login/index'),
     hidden: true
   },
+]
 
-  {
-    path: '/404',
-    component: () => import('@/views/404'),
-    hidden: true
-  },
-
+export const asyncRouterMap = [
   {
     path: '/',
     component: Layout,
     redirect: '/centerConsole',
+    meta: { role: [2] }, //页面需要的权限
     children: [{
       path: 'centerConsole',
       name: 'CenterConsole',
       component: () => import('@/views/centerConsole/index'),
-      meta: { title: '中控台', icon: 'el-icon-s-operation' }
+      meta: { title: '中控台', icon: 'el-icon-s-operation', role: [2] }
     }]
   },
   {
     path: '/dashboard',
     component: Layout,
     redirect: '/dashboard',
+    meta: { role: [2,3] }, //页面需要的权限
     children: [{
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '本地看板', icon: 'dashboard' }
+      meta: { title: '本地看板', icon: 'dashboard', role: [2,3]}
     }]
   },
   {
     path: '/equipment',
     component: Layout,
-    redirect: '/equipmentManager/equipment',
+    redirect: '/equipment',
     name: 'Equipment',
-    meta: { title: '设备管理', icon: 'component' },
+    meta: { title: '设备管理', icon: 'component', role: [1] },
     children: [
       {
         path: 'equipment',
         name: 'Equipment',
         component: () => import('@/views/equipment/index'),
-        meta: { title: '设备管理', icon: 'component' }
+        meta: { title: '设备管理', icon: 'component', role: [1] }
       },
       {
         path: 'maintenance',
         name: 'Maintenance',
         component: () => import('@/views/equipment/maintenance'),
-        meta: { title: '设备保养记录', icon: 'maintenance' }
+        meta: { title: '设备保养记录', icon: 'maintenance', role: [1] }
       },
       {
         path: 'defaultDate',
         name: 'DefaultDate',
         component: () => import('@/views/equipment/defaultDate'),
-        meta: { title: '设备日期默认值维护', icon: 'maintenance' }
+        meta: { title: '设备日期默认值维护', icon: 'maintenance', role: [1] }
       }
     ]
   },
@@ -97,13 +95,13 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/group/user',
     name: 'Group',
-    meta: { title: '用户管理', icon: 'peoples' },
+    meta: { title: '用户管理', icon: 'peoples', role: [1] },
     children: [
       {
         path: 'user',
         name: 'User',
         component: () => import('@/views/user/index'),
-        meta: { title: '用户管理', icon: 'user' }
+        meta: { title: '用户管理', icon: 'user', role: [1] }
       },
       // {
       //   path: 'role',
@@ -114,89 +112,6 @@ export const constantRoutes = [
     ]
   },
 
-  // {
-  //   path: '/form',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       name: 'Form',
-  //       component: () => import('@/views/form/index'),
-  //       meta: { title: 'Form', icon: 'form' }
-  //     }
-  //   ]
-  // },
-
-  // {
-  //   path: '/nested',
-  //   component: Layout,
-  //   redirect: '/nested/menu1',
-  //   name: 'Nested',
-  //   meta: {
-  //     title: 'Nested',
-  //     icon: 'nested'
-  //   },
-  //   children: [
-  //     {
-  //       path: 'menu1',
-  //       component: () => import('@/views/nested/menu1/index'), // Parent router-view
-  //       name: 'Menu1',
-  //       meta: { title: 'Menu1' },
-  //       children: [
-  //         {
-  //           path: 'menu1-1',
-  //           component: () => import('@/views/nested/menu1/menu1-1'),
-  //           name: 'Menu1-1',
-  //           meta: { title: 'Menu1-1' }
-  //         },
-  //         {
-  //           path: 'menu1-2',
-  //           component: () => import('@/views/nested/menu1/menu1-2'),
-  //           name: 'Menu1-2',
-  //           meta: { title: 'Menu1-2' },
-  //           children: [
-  //             {
-  //               path: 'menu1-2-1',
-  //               component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-  //               name: 'Menu1-2-1',
-  //               meta: { title: 'Menu1-2-1' }
-  //             },
-  //             {
-  //               path: 'menu1-2-2',
-  //               component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-  //               name: 'Menu1-2-2',
-  //               meta: { title: 'Menu1-2-2' }
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           path: 'menu1-3',
-  //           component: () => import('@/views/nested/menu1/menu1-3'),
-  //           name: 'Menu1-3',
-  //           meta: { title: 'Menu1-3' }
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       path: 'menu2',
-  //       component: () => import('@/views/nested/menu2/index'),
-  //       name: 'Menu2',
-  //       meta: { title: 'menu2' }
-  //     }
-  //   ]
-  // },
-
-  // {
-  //   path: 'external-link',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-  //       meta: { title: 'External Link', icon: 'link' }
-  //     }
-  //   ]
-  // },
-
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
@@ -204,7 +119,7 @@ export const constantRoutes = [
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
+  routes: constantRouterMap
 })
 
 const router = createRouter()

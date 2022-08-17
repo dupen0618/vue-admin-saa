@@ -2,7 +2,7 @@
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
 
-function resolve(dir) {
+function resolve (dir) {
   return path.join(__dirname, dir)
 }
 
@@ -37,8 +37,8 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    proxy:{
-      [process.env.VUE_APP_BASE_API]:{
+    proxy: {
+      [process.env.VUE_APP_BASE_API]: {
         // target: 'http://192.168.5.234:8080/',
         target: 'https://localhost:44399/',
         ws: true,
@@ -58,7 +58,7 @@ module.exports = {
       }
     }
   },
-  chainWebpack(config) {
+  chainWebpack (config) {
     // it can improve the speed of the first screen, it is recommended to turn on preload
     config.plugin('preload').tap(() => [
       {
@@ -97,7 +97,7 @@ module.exports = {
             .plugin('ScriptExtHtmlWebpackPlugin')
             .after('html')
             .use('script-ext-html-webpack-plugin', [{
-            // `runtime` must same as runtimeChunk name. default is `runtime`
+              // `runtime` must same as runtimeChunk name. default is `runtime`
               inline: /runtime\..*\.js$/
             }])
             .end()

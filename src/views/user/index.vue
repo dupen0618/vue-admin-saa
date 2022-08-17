@@ -11,7 +11,7 @@
       <el-input
         v-model="listQuery.mobile"
         placeholder="手机"
-        style="width: 200px"
+        style="width: 200px; margin-left: 5px"
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
@@ -20,54 +20,20 @@
         v-model="listQuery.startTime"
         type="datetime"
         placeholder="开始时间"
-        style="width: 200px"
+        style="width: 200px; margin-left: 5px"
       />
       <el-date-picker
         v-model="listQuery.endTime"
         type="datetime"
         placeholder="结束时间"
-        style="width: 200px"
+        style="width: 200px; margin-left: 5px"
       />
-      <!-- <el-select
-        v-model="listQuery.importance"
-        placeholder="Imp"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-select
-        v-model="listQuery.type"
-        placeholder="Type"
-        clearable
-        class="filter-item"
-        style="width: 130px"
-      >
-        <el-option
-          v-for="item in calendarTypeOptions"
-          :key="item.key"
-          :label="item.display_name+'('+item.key+')'"
-          :value="item.key"
-        />
-      </el-select>
-      <el-select
-        v-model="listQuery.sort"
-        style="width: 140px"
-        class="filter-item"
-        @change="handleFilter"
-      >
-        <el-option
-          v-for="item in sortOptions"
-          :key="item.key"
-          :label="item.label"
-          :value="item.key"
-        />
-      </el-select>-->
+
       <el-button
         v-waves
         class="filter-item"
         type="primary"
+        style="margin-left: 10px"
         icon="el-icon-search"
         @click="handleFilter"
         >查询</el-button
@@ -104,6 +70,7 @@
       v-loading="listLoading"
       :data="list"
       element-loading-text="Loading"
+      style="margin-top: 50px"
       border
       fit
       highlight-current-row
@@ -388,7 +355,8 @@ export default {
       this.$refs["dataForm"].validate((valid) => {
         if (valid) {
           createUser(this.temp).then(() => {
-            this.list.unshift(this.temp);
+            //this.list.unshift(this.temp);
+            this.fetchData();
             this.dialogFormVisible = false;
             this.$notify({
               title: "Success",

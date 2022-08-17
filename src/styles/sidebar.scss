@@ -94,10 +94,13 @@
   .hideSidebar {
     .sidebar-container {
       width: 54px !important;
+      pointer-events: none;
+      transition-duration: 0.3s;
+      transform: translate3d(-$sideBarWidth, 0, 0);
     }
 
     .main-container {
-      margin-left: 54px;
+      margin-left: 0;
     }
 
     .submenu-title-noDropdown {

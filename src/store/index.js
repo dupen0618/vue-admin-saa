@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import getters from './getters'
+import routerMap from './routerMap'
 import app from './modules/app'
 import settings from './modules/settings'
 import user from './modules/user'
@@ -11,9 +12,10 @@ const store = new Vuex.Store({
   modules: {
     app,
     settings,
-    user
+    user,
+    routerMap
   },
-  getters
+  getters,
 })
 
 export default store

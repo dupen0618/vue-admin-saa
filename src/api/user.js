@@ -8,9 +8,25 @@ export function login(data) {
   })
 }
 
+export function login2(data) {
+  return request({
+    url: '/api/user/loginIn',
+    method: 'post',
+    params: data
+  })
+}
+
 export function getInfo(token) {
   return request({
     url: '/vue-admin-template/user/info',
+    method: 'get',
+    params: { token }
+  })
+}
+
+export function getInfo2(token) {
+  return request({
+    url: '/api/user/info',
     method: 'get',
     params: { token }
   })

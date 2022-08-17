@@ -83,7 +83,7 @@
       referrerpolicy="no-referrer"
       src="@/assets/dashboard/img/pshq9yi38nlda0112obhknmggeasvkveo0uhh35235d38-9046-44a7-8749-fc6d1b086936.png"
     />
-    <div class="text-wrapper_26 flex-row">
+    <!-- <div class="text-wrapper_26 flex-row">
       <span class="text_86">时间</span>
       <span class="text_87">事件</span>
     </div>
@@ -110,50 +110,37 @@
     <div class="text-wrapper_32 flex-row">
       <span class="text_98">2021-3-20&nbsp;6:20</span>
       <span class="text_99">光栅报警停机</span>
-    </div>
-    <!-- <el-table :data="tableData" style="width: 100%">
-      <el-table-column prop="date" label="日期" style="width: 50%">
-      </el-table-column>
-      <el-table-column prop="name" label="姓名" style="width: 50%">
-      </el-table-column>
-    </el-table> -->
-    <!-- <div class="box_55 flex-row justify-between">
-      <div class="section_16 flex-col"></div>
-      <span class="text_100">报警频次数</span>
-    </div>
-    <div class="box_56 flex-row justify-between">
-      <div class="text-wrapper_68 flex-col">
-        <span class="text_101">50</span>
-        <span class="text_102">40</span>
-        <span class="text_103">30</span>
-        <span class="text_104">20</span>
-        <span class="text_105">10</span>
-        <span class="text_106">0</span>
-      </div>
-      <div class="section_22 flex-row">
-        <div class="group_20 flex-col"></div>
-        <div class="group_21 flex-col">
-          <div class="group_22 flex-col"></div>
-        </div>
-      </div>
-      <div class="group_20 flex-col"></div>
-    </div>
-    <div class="text-wrapper_69 flex-row justify-between">
-      <span class="text_107">1:00</span>
-      <span class="text_108">3:00</span>
-      <span class="text_109">5:00</span>
-      <span class="text_110">7:00</span>
-      <span class="text_111">9:00</span>
-      <span class="text_112">10:00</span>
-    </div>
-
-    <div class="block_26 flex-col">
-      <div class="block_27 flex-col align-center">
-        <div class="box_46 flex-col">
-          <div class="box_47 flex-col"></div>
-        </div>
-      </div>
     </div> -->
+    <el-table
+      :data="list"
+      style="
+        width: 100%;
+        padding-top: 5px;
+        margin-left: 10px;
+        background-color: rgba(4, 38, 90, 0.3072);
+        font-size: 16px;
+        color: rgba(255, 255, 255, 1);
+        border: none;
+      "
+      :cell-style="{
+        background: '#04265a',
+        borderColor: '#00a9ff',
+        padding: '5px',
+      }"
+      :row-style="{ height: '20px' }"
+      :header-cell-style="{ background: '#04265a', color: '#ffffff' }"
+    >
+      <el-table-column label="时间" width="180" align="center">
+        <template slot-scope="scope">
+          {{ scope.row.timestamp }}
+        </template>
+      </el-table-column>
+      <el-table-column label="事件" width="180" align="center">
+        <template slot-scope="scope">
+          {{ scope.row.event }}
+        </template>
+      </el-table-column>
+    </el-table>
     <div class="block_26 flex-col">
       <e-charts class="chart" :option="option2" />
     </div>
@@ -182,6 +169,7 @@ export default {
           name: "王小虎",
         },
       ],
+      list: null,
     };
   },
   computed: {
@@ -258,6 +246,21 @@ export default {
       };
     },
   },
+  created() {
+    this.fetchData();
+  },
+  methods: {
+    fetchData() {
+      this.list = [
+        { timestamp: "2021-3-20 6:20", event: "光栅报警停机" },
+        { timestamp: "2021-3-20 6:20", event: "光栅报警停机" },
+        { timestamp: "2021-3-20 6:20", event: "光栅报警停机" },
+        { timestamp: "2021-3-20 6:20", event: "光栅报警停机" },
+        { timestamp: "2021-3-20 6:20", event: "光栅报警停机" },
+        { timestamp: "2021-3-20 6:20", event: "光栅报警停机" },
+      ];
+    },
+  },
 };
 </script>
 
@@ -266,5 +269,9 @@ export default {
 .chart {
   height: 100%;
   width: 100%;
+}
+.el-table--border::after,
+.el-table--group::after {
+  width: 0;
 }
 </style>
