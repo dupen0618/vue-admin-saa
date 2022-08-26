@@ -29,13 +29,22 @@ export function maintenanceLevelList() {
 
 export function updateMaintenanceLevelList(list) {
   return request({
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    url: '/api/MaintenanceLevel/updateList',
+    url: '/api/MaintenanceLevel/UpdateList',
+    method: 'get',
+    // headers: {
+		//   "Content-Type": "application/x-www-form-urlencoded",
+	  // },
+	  params: {levelList: list}
+  })
+}
+
+export function updateMaintenanceLevel(obj) {
+  return request({
+    url: '/api/MaintenanceLevel/UpdateObj',
     method: 'POST',
-    data: {
-      firstName: "张三"
-    }
+    headers: {
+		  "Content-Type": "application/json; charset=utf-8",
+	  },
+	  params:obj
   })
 }

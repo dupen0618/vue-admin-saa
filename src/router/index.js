@@ -54,13 +54,19 @@ export const asyncRouterMap = [
   {
     path: '/dashboard',
     component: Layout,
+    name: 'Dashboard',
     redirect: '/dashboard',
-    meta: { role: [2,3] }, //页面需要的权限
+    meta: { title: '本地看板', icon: 'component', role: [2,3] }, //页面需要的权限
     children: [{
-      path: 'dashboard',
+      path: 'dashboard/:equipmentIp',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
       meta: { title: '本地看板', icon: 'dashboard', role: [2,3]}
+    },{
+      path: 'dashboardSetting/:equipmentIp',
+      name: 'DashboardSetting',
+      component: () => import('@/views/dashboard/setting'),
+      meta: { title: '本地看板设置', icon: 'setting-fill', role: [2,3]}
     }]
   },
   {
@@ -68,13 +74,13 @@ export const asyncRouterMap = [
     component: Layout,
     redirect: '/equipment',
     name: 'Equipment',
-    meta: { title: '设备管理', icon: 'component', role: [1] },
+    meta: { title: '设备管理', icon: 'maintenance', role: [1] },
     children: [
       {
         path: 'equipment',
         name: 'Equipment',
         component: () => import('@/views/equipment/index'),
-        meta: { title: '设备管理', icon: 'component', role: [1] }
+        meta: { title: '设备管理', icon: 'maintenance', role: [1] }
       },
       {
         path: 'maintenance',
@@ -87,6 +93,45 @@ export const asyncRouterMap = [
         name: 'DefaultDate',
         component: () => import('@/views/equipment/defaultDate'),
         meta: { title: '设备日期默认值维护', icon: 'maintenance', role: [1] }
+      }
+    ]
+  },
+  {
+    path: '/historicalData',
+    component: Layout,
+    redirect: '/historicalData',
+    name: 'historicalData',
+    meta: { title: '历史资料管理', icon: 'data', role: [1] },
+    children: [
+      {
+        path: 'historicalData',
+        name: 'DistoricalData',
+        component: () => import('@/views/historicalData/index'),
+        meta: { title: '报警信息查询', icon: 'list', role: [1] }
+      },
+      {
+        path: 'timeStatistics',
+        name: 'TimeStatistics',
+        component: () => import('@/views/historicalData/timeStatistics'),
+        meta: { title: '报警按时间统计分析', icon: 'statistics', role: [1] }
+      },
+      {
+        path: 'alarmFrequency',
+        name: 'AlarmFrequency',
+        component: () => import('@/views/historicalData/alarmFrequency'),
+        meta: { title: '区间内报警频率统计', icon: 'frequency_2', role: [1] }
+      },
+      {
+        path: 'kpgAlarm',
+        name: 'KPGAlarm',
+        component: () => import('@/views/historicalData/kpgAlarm'),
+        meta: { title: 'K、P、G报警统计', icon: 'statistics_2', role: [1] }
+      },
+      {
+        path: 'alarmRanking',
+        name: 'AlarmRanking',
+        component: () => import('@/views/historicalData/alarmRanking'),
+        meta: { title: '区间内报警排行榜', icon: 'rank', role: [1] }
       }
     ]
   },

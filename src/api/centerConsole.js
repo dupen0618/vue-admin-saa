@@ -8,3 +8,10 @@ export function fetchData(query) {
     params: query
   })
 }
+
+export function fetchCnt() {
+  return request({
+    url: '/api/CenterConsole/fetchCnt',
+    method: 'get',
+  })
+}

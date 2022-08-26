@@ -24,6 +24,10 @@ Vue.prototype.$moment = moment;
 import VueResource from 'vue-resource'
 Vue.use(VueResource)
 Vue.component('ECharts', ECharts)
+
+import VueCoreVideoPlayer from 'vue-core-video-player'
+
+Vue.use(VueCoreVideoPlayer)
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api

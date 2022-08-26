@@ -2,18 +2,30 @@
   <div class="app-container section_2" :style="defaultHeight">
     <el-row class="group_1">
       <el-col :span="8" class="top_group">
-        <span class="text_1">2022-8-7</span>
-        <span class="text_2">10:28:46</span>
+        <span class="text_1">{{ dateTime }}</span>
       </el-col>
       <el-col :span="8" class="top_group top_group_col2">
         <span class="text_3">AIOT中控台</span>
       </el-col>
       <el-col :span="8" class="top_group">
-        <img
-          class="label_1"
-          referrerpolicy="no-referrer"
-          src="@/assets/centerConsole/img/ps1edpi0pd463onqtheb3y9w3wjyyn1epta968e9d9-93e9-46ec-8926-fd76ae2dbf6c.png"
-        />
+        <el-dropdown
+          class="avatar-container"
+          style="float: right"
+          trigger="click"
+        >
+          <div class="avatar-wrapper">
+            <img
+              class="label_1"
+              referrerpolicy="no-referrer"
+              src="@/assets/centerConsole/img/ps1edpi0pd463onqtheb3y9w3wjyyn1epta968e9d9-93e9-46ec-8926-fd76ae2dbf6c.png"
+            />
+          </div>
+          <el-dropdown-menu slot="dropdown" class="user-dropdown">
+            <el-dropdown-item divided @click.native="logout">
+              <span style="display: block">退出</span>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </el-col>
     </el-row>
     <el-row :gutter="40" class="panel-group">
@@ -25,7 +37,7 @@
               referrerpolicy="no-referrer"
               src="@/assets/centerConsole/img/ps6v02ewtftddlvz62ro59hn82i6g1ey2h02f4fb06-4532-462f-9434-8ce90c744b96.png"
             />
-            <span class="text_44">120</span>
+            <span class="text_44">{{ total }}</span>
           </div>
           <div class="text-wrapper_17">
             <span class="text_45">机台总数</span>
@@ -40,7 +52,7 @@
               referrerpolicy="no-referrer"
               src="@/assets/centerConsole/img/psofx4glt8ixzkgxjjmzivj2doihvjd9fg4384d54b-7859-4207-a79f-269c36cf5b7f.png"
             />
-            <span class="text_46">100</span>
+            <span class="text_46">{{ normalCnt }}</span>
           </div>
           <div class="text-wrapper_17">
             <span class="text_45">正常运转</span>
@@ -55,7 +67,7 @@
               referrerpolicy="no-referrer"
               src="@/assets/centerConsole/img/pst2e1jgh67b2bdta6yzfrbxy6xga3grgfe2007fc8-c4e7-4223-9296-ef7845fc1721.png"
             />
-            <span class="text_48">20</span>
+            <span class="text_48">{{ alarmCnt }}</span>
           </div>
           <div class="text-wrapper_17">
             <span class="text_45">异常停机</span>
@@ -70,7 +82,7 @@
               referrerpolicy="no-referrer"
               src="@/assets/centerConsole/img/pscbpi28j7jit3ga31d6ie55zgcefkiol90488cd8-9589-4afe-99e5-c48ad25b3d96.png"
             />
-            <span class="text_50">80</span>
+            <span class="text_50">{{ otherCnt }}</span>
           </div>
           <div class="text-wrapper_17">
             <span class="text_45">待机机台</span>
@@ -85,7 +97,7 @@
               referrerpolicy="no-referrer"
               src="@/assets/centerConsole/img/ps7b4kqsji3w9xwwby1xsuw9mqq9xphqh95bd7a52-f66a-400a-a297-30e599e91b3d.png"
             />
-            <span class="text_52">20</span>
+            <span class="text_52">{{ offlineCnt }}</span>
           </div>
           <div class="text-wrapper_17">
             <span class="text_45">离线机台</span>
@@ -100,7 +112,7 @@
               referrerpolicy="no-referrer"
               src="@/assets/centerConsole/img/psd1socg5qxqdt6iljt6fpmw3v11lmkc8ff41c989-0454-494a-937b-b4ef458cdb48.png"
             />
-            <span class="text_54">80</span>
+            <span class="text_54">{{ properRate }}</span>
             <span class="text_55">%</span>
           </div>
           <div class="text-wrapper_17">
@@ -110,7 +122,7 @@
       </el-col>
     </el-row>
     <div class="block_1">
-      <el-row :gutter="40" style="margin-top: 20px">
+      <el-row :gutter="40" style="margin: 20px 0 0 0">
         <el-col>
           <el-select
             v-model="listQuery.partition"
@@ -119,7 +131,7 @@
             popper-class="selectFrom"
             style="
               width: 200px;
-              margin-left: 20px;
+              margin-left: 5px;
               background-color: rgba(9, 84, 168, 0.28);
             "
           >
@@ -152,19 +164,26 @@
           >
         </el-col>
       </el-row>
-      <el-row :gutter="40">
+      <el-row :gutter="10" style="margin: 0 0 0 0">
         <el-col
           :xs="12"
           :sm="12"
           :lg="4"
+          style="padding-left: 5px; padding-right: 5px"
           v-for="(item, index) in list"
           :key="index"
         >
           <el-card class="box-card">
             <div slot="header" :class="item.statusStyle.fix">
-              <span>{{ item.equipment }}</span>
+              <router-link
+                :to="{
+                  name: 'Dashboard',
+                  params: { equipmentIp: item.equipmentIp },
+                }"
+                ><span>{{ item.equipment }}</span></router-link
+              >
               <el-button :class="item.statusStyle.text1" type="text"
-                >正常<i :class="item.statusStyle.icon1"></i
+                >{{ item.status }}<i :class="item.statusStyle.icon1"></i
               ></el-button>
             </div>
             <div style="float: left">
@@ -188,7 +207,7 @@
           </el-card>
         </el-col>
       </el-row>
-      <el-row :gutter="40" style="margin-top: 30px; margin-bottom: 30px">
+      <el-row :gutter="40" style="margin-top: 20px; margin-bottom: 10px">
         <el-col>
           <el-pagination
             background
@@ -207,8 +226,8 @@
 </template>
 <script>
 import waves from "@/directive/waves"; // waves directive
-import { fetchData } from "@/api/centerConsole";
-import { jsxOpeningElement } from "@babel/types";
+import { fetchData, fetchCnt } from "@/api/centerConsole";
+import { parseTime } from "@/utils";
 
 const calendarTypeOptions = [
   { key: "A", display_name: "A区" },
@@ -235,11 +254,23 @@ const imgUrls = {
 };
 
 const statusName = ["normal", "alarm", "offline", "other"];
+const statusName2 = {
+  "-99": "offline",
+  "-1": "offline",
+  0: "other",
+  1: "normal",
+  2: "alarm",
+  3: "other",
+  4: "other",
+  5: "alarm",
+  6: "other",
+};
 
 export default {
   directives: { waves },
   data() {
     return {
+      dateTime: undefined,
       constants: {},
       form: {
         region: "",
@@ -256,56 +287,132 @@ export default {
       },
       calendarTypeOptions,
       currentPage: 1,
-      total: 100,
       list: [],
       defaultHeight: {
         height: "",
       },
+      timer: undefined,
+      total: 100,
+      normalCnt: 0,
+      alarmCnt: 0,
+      offlineCnt: 0,
+      otherCnt: 0,
+      properRate: 0,
+      cntList: {
+        normalCnt: 0,
+        alarmCnt: 0,
+        offlineCnt: 0,
+        otherCnt: 0,
+      },
     };
   },
   created() {
+    this.fetchCnt();
     this.fetchData();
     //页面创建时执行一次getHeight进行赋值，顺道绑定resize事件
     window.addEventListener("resize", this.getHeight);
     this.getHeight();
+
+    this.timer = setInterval(() => {
+      this.updateDateTime();
+    }, 1000); //单位是毫
   },
   methods: {
+    fetchCnt() {
+      fetchCnt().then((response) => {
+        var list = JSON.parse(response.data);
+        this.initCntList();
+        list.forEach((element, index, array) => {
+          this.setStatus(element.status);
+        });
+
+        this.normalCnt = this.cntList.normalCnt;
+        this.alarmCnt = this.cntList.alarmCnt;
+        this.offlineCnt = this.cntList.offlineCnt;
+        this.otherCnt = this.cntList.otherCnt;
+        this.properRate =
+          ((this.normalCnt * 1.0) / this.total).toFixed(2) * 100;
+      });
+    },
     fetchData() {
-      // for (var i = 0; i < 18; i++) {
-      //   var obj = {
-      //     equipment: "AIOT-01",
-      //     made: "综化线",
-      //     lineBody: "#2",
-      //     summary: "设备启动运转中",
-      //     statusStyle: this.setStyle(i % 4),
-      //   };
-      //   this.list.push(obj);
-      // }
       fetchData(this.listQuery).then((response) => {
         var json = JSON.parse(response.data);
         this.total = json.total;
         var list = [];
         json.items.forEach((element, index, array) => {
           var obj = {
+            equipmentIp: element.ipAddr,
             equipment: element.equipment,
             made: element.made,
             lineBody: element.lineBody,
             summary: element.summary,
-            statusStyle: this.setStyle(index % 4),
+            status: this.setStatus(element.status),
+            statusStyle: this.setStyle(element.status),
           };
           list.push(obj);
         });
         this.list = list;
       });
     },
+    updateDateTime() {
+      var now = new Date();
+      this.dateTime = parseTime(now);
+    },
+    initCntList() {
+      this.cntList = {
+        normalCnt: 0,
+        alarmCnt: 0,
+        offlineCnt: 0,
+        otherCnt: 0,
+      };
+    },
+    setStatus(val) {
+      if (val === -99) {
+        this.cntList.offlineCnt++;
+        return "未連線";
+      }
+      if (val === -1) {
+        this.cntList.offlineCnt++;
+        return "設備未開機";
+      }
+      if (val === 0) {
+        this.cntList.otherCnt++;
+        return "設備待機狀態";
+      }
+      if (val === 1) {
+        this.cntList.normalCnt++;
+        return "設備啟動運轉中";
+      }
+      if (val === 2) {
+        this.cntList.alarmCnt++;
+        return "設備異常停止中";
+      }
+      if (val === 3) {
+        this.cntList.otherCnt++;
+        return "手動狀態";
+      }
+      if (val === 4) {
+        this.cntList.otherCnt++;
+        return "機台暫停";
+      }
+      if (val === 5) {
+        this.cntList.alarmCnt++;
+        return "設備警報通知(不停機)";
+      }
+      if (val === 6) {
+        this.cntList.otherCnt++;
+        return "設備保養";
+      }
+      return val;
+    },
     setStyle(type) {
+      var style = statusName2[type];
       return {
-        fix: statusName[type] + "fix",
-        text1: "text-" + statusName[type],
-        icon1: "el-icon-" + statusName[type] + " el-icon--right",
-        icon2: "el-icon-" + statusName[type] + "_1 el-icon--left",
-        imgUrl: require("@/assets/centerConsole/img/" +
-          imgUrls[statusName[type]]),
+        fix: style + "fix",
+        text1: "text-" + style,
+        icon1: "el-icon-" + style + " el-icon--right",
+        icon2: "el-icon-" + style + "_1 el-icon--left",
+        imgUrl: require("@/assets/centerConsole/img/" + imgUrls[style]),
       };
     },
     handleFilter() {},
@@ -318,8 +425,17 @@ export default {
       this.fetchData();
     },
     getHeight() {
-      this.defaultHeight.height = window.innerHeight - 30 + "px";
+      this.defaultHeight.height = window.innerHeight - 0 + "px";
     },
+    async logout() {
+      await this.$store.dispatch("user/logout");
+      this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+    },
+  },
+  destroyed: function () {
+    // 每次离开当前界面时，清除定时器
+    clearInterval(this.timer);
+    this.timer = null;
   },
 };
 </script>
@@ -369,6 +485,12 @@ export default {
 
 ::v-deep .el-card__header {
   border-bottom-width: 0px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+::v-deep .el-card__body {
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .text {
@@ -377,7 +499,7 @@ export default {
 }
 
 .item {
-  margin-bottom: 18px;
+  margin-bottom: 15px;
 }
 /**
   normal:正常
@@ -486,14 +608,13 @@ export default {
 }
 
 .box-card {
-  width: 90%;
-  margin-top: 20px;
+  width: 98%;
   box-shadow: 0px 2px 18px 0px rgba(6, 80, 128, 0.8);
   background-color: rgba(4, 45, 95, 0.88);
   border-radius: 8px;
-  height: 200px;
+  height: 30%;
   border: 1px solid rgba(15, 100, 221, 1);
-  margin-left: 29px;
+  margin: 20px 0 0 5px;
 }
 
 .box-card-normal {
@@ -502,7 +623,7 @@ export default {
   box-shadow: 0px 2px 18px 0px rgba(6, 80, 128, 0.8);
   background-color: rgba(4, 45, 95, 0.88);
   border-radius: 8px;
-  height: 200px;
+  height: 30%;
   border: 1px solid rgba(15, 100, 221, 1);
   margin-left: 29px;
 }
@@ -532,7 +653,7 @@ export default {
 //正常图片路径
 .el-icon-normal {
   /* 图片路径 */
-  background: url("./img/psofx4glt8ixzkgxjjmzivj2doihvjd9fg4384d54b-7859-4207-a79f-269c36cf5b7f.png")
+  background: url("~@/assets/centerConsole/img/psofx4glt8ixzkgxjjmzivj2doihvjd9fg4384d54b-7859-4207-a79f-269c36cf5b7f.png")
     center no-repeat;
   background-size: cover;
 }
@@ -554,7 +675,7 @@ export default {
 //异常图片路径
 .el-icon-other {
   /* 图片路径 */
-  background: url("./img/pscbpi28j7jit3ga31d6ie55zgcefkiol90488cd8-9589-4afe-99e5-c48ad25b3d96.png")
+  background: url("~@/assets/centerConsole/img/pscbpi28j7jit3ga31d6ie55zgcefkiol90488cd8-9589-4afe-99e5-c48ad25b3d96.png")
     center no-repeat;
   background-size: cover;
 }
@@ -575,7 +696,7 @@ export default {
 
 .el-icon-alarm_1 {
   /* 图片路径 */
-  background: url("./img/psy18jhxmdvh839yq17eh0zbw8v246r5llld96de396-c51f-4388-a5e9-407a90ff9d77.png")
+  background: url("~@/assets/centerConsole/img/psy18jhxmdvh839yq17eh0zbw8v246r5llld96de396-c51f-4388-a5e9-407a90ff9d77.png")
     center no-repeat;
   background-size: cover;
 }
@@ -596,7 +717,7 @@ export default {
 
 .el-icon-normal_1 {
   /* 图片路径 */
-  background: url("./img/psyulc7os849kbtc9eqzd32q32xgoz96h3ebbc78b5b-137c-4504-a98a-36d2825ebe71.png")
+  background: url("~@/assets/centerConsole/img/psyulc7os849kbtc9eqzd32q32xgoz96h3ebbc78b5b-137c-4504-a98a-36d2825ebe71.png")
     center no-repeat;
   background-size: cover;
 }
@@ -617,7 +738,7 @@ export default {
 
 .el-icon-offline_1 {
   /* 图片路径 */
-  background: url("./img/psy4jhhqt7pedxb5xbkj5algtuxf0z6vfe662693d8-d62d-4259-804f-87c6858da673.png")
+  background: url("~@/assets/centerConsole/img/psy4jhhqt7pedxb5xbkj5algtuxf0z6vfe662693d8-d62d-4259-804f-87c6858da673.png")
     center no-repeat;
   background-size: cover;
 }
@@ -638,7 +759,7 @@ export default {
 
 .el-icon-other_1 {
   /* 图片路径 */
-  background: url("./img/pszfit316ky1oxl1zndpvadxoqg5mkc1erbf100b2d-fb1a-42a3-b2c0-4021226b6d65.png")
+  background: url("~@/assets/centerConsole/img/pszfit316ky1oxl1zndpvadxoqg5mkc1erbf100b2d-fb1a-42a3-b2c0-4021226b6d65.png")
     center no-repeat;
   background-size: cover;
 }
@@ -659,7 +780,7 @@ export default {
 
 .el-icon-offline {
   /* 图片路径 */
-  background: url("./img/psfzoehbwa2mdvf3kvzw7hspmeuol2h1de4f65ef2-517f-4a27-84b7-41d2b994667c.png")
+  background: url("~@/assets/centerConsole/img/psfzoehbwa2mdvf3kvzw7hspmeuol2h1de4f65ef2-517f-4a27-84b7-41d2b994667c.png")
     center no-repeat;
   background-size: cover;
 }
@@ -680,7 +801,7 @@ export default {
 
 .el-icon-alarm {
   /* 图片路径 */
-  background: url("./img/psvn4p33jexoocw3x7lstgio44qc4hx4hex9d12abc3-d971-445c-bea6-aaa6e39fe0cc.png")
+  background: url("~@/assets/centerConsole/img/psvn4p33jexoocw3x7lstgio44qc4hx4hex9d12abc3-d971-445c-bea6-aaa6e39fe0cc.png")
     center no-repeat;
   background-size: cover;
 }
@@ -701,28 +822,28 @@ export default {
 
 ::v-deep {
   .el-pagination.is-background .btn-prev {
-    background: url(./img/psuxctvt94b9pbbzexbzqrdik4dxl3gs5j8b7d8723-946b-4105-aa2f-6a4d1ae9af53.png)
+    background: url(~@/assets/centerConsole/img/psuxctvt94b9pbbzexbzqrdik4dxl3gs5j8b7d8723-946b-4105-aa2f-6a4d1ae9af53.png)
       100% no-repeat;
     background-size: 100% 100%;
     // background-color: #fff; // 进行修改未选中背景和字体
     color: #fff;
   }
   .el-pagination.is-background .btn-next {
-    background: url(./img/psuxctvt94b9pbbzexbzqrdik4dxl3gs5j8b7d8723-946b-4105-aa2f-6a4d1ae9af53.png)
+    background: url(~@/assets/centerConsole/img/psuxctvt94b9pbbzexbzqrdik4dxl3gs5j8b7d8723-946b-4105-aa2f-6a4d1ae9af53.png)
       100% no-repeat;
     background-size: 100% 100%;
     // background-color: #fff; // 进行修改未选中背景和字体
     color: #fff;
   }
   .el-pagination.is-background .el-pager li:not(.disabled) {
-    background: url(./img/psuxctvt94b9pbbzexbzqrdik4dxl3gs5j8b7d8723-946b-4105-aa2f-6a4d1ae9af53.png)
+    background: url(~@/assets/centerConsole/img/psuxctvt94b9pbbzexbzqrdik4dxl3gs5j8b7d8723-946b-4105-aa2f-6a4d1ae9af53.png)
       100% no-repeat;
     background-size: 100% 100%;
     // background-color: #fff; // 进行修改未选中背景和字体
     color: #fff;
   }
   .el-pagination.is-background .el-pager li:not(.disabled).active {
-    background: url(./img/psmkw5orjugwcfaonjupq2mi7p17hucldwb666fd7b-2e12-410f-ac9c-19c0ce6617cf.png)
+    background: url(~@/assets/centerConsole/img/psmkw5orjugwcfaonjupq2mi7p17hucldwb666fd7b-2e12-410f-ac9c-19c0ce6617cf.png)
       100% no-repeat;
     background-size: 100% 100%;
     // background-color: #4f75ff; // 进行修改选中项背景和字体

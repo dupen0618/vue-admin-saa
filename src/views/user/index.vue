@@ -303,8 +303,14 @@ export default {
       this.listLoading = true;
       fetchList(this.listQuery).then((response) => {
         var json = JSON.parse(response.data);
-        this.list = json.items;
-        this.total = json.total;
+        var list = [];
+        json.items.forEach((element) => {
+          if (element.roleId > 0) {
+            list.push(element);
+          }
+        });
+        this.list = list;
+        this.total = list.length;
         this.listLoading = false;
       });
     },

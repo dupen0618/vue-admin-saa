@@ -1,5 +1,18 @@
 <template>
   <div class="login-container">
+    <div class="login_log">
+      <div class="image-wrapper_1">
+        <img
+          class="image_1"
+          referrerpolicy="no-referrer"
+          src="~@/assets/login/img/psx692gd02rw8x70r1esamsizkiav2bwm2280e792-8a94-4f26-b768-d1a298e9b9a8.png"
+        />
+      </div>
+      <div class="text-wrapper_1">
+        <span class="text_1">版权昆山润石智能科技有限公司</span>
+      </div>
+    </div>
+
     <el-form
       ref="loginForm"
       :model="loginForm"
@@ -9,7 +22,7 @@
       label-position="left"
     >
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">SAA&nbsp;Dashboard&nbsp;数据看板</h3>
       </div>
 
       <el-form-item prop="username">
@@ -87,7 +100,7 @@ export default {
     };
     return {
       loginForm: {
-        username: "zhangsan",
+        username: "admin",
         password: "123456",
       },
       loginRules: {
@@ -145,6 +158,7 @@ export default {
 };
 </script>
 
+<style scoped lang="css" src="@/assets/login/index.css" />
 <style lang="scss">
 /* 修复input 背景不协调 和光标变色 */
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
@@ -172,7 +186,7 @@ $cursor: #fff;
       -webkit-appearance: none;
       border-radius: 0px;
       padding: 12px 5px 12px 15px;
-      color: $light_gray;
+      color: #283443;
       height: 47px;
       caret-color: $cursor;
 
@@ -201,20 +215,37 @@ $light_gray: #eee;
   min-height: 100%;
   width: 100%;
   background-color: $bg;
+  background: url(~@/assets/login/img/psrp1y4ko9azca4m3t0nvkiq2lrrzdb0jumce1780d1-37f2-47d4-b131-e6e59312511e.png)
+    0px 0px no-repeat;
+  background-size: 100% 100%;
   overflow: hidden;
 
+  .login_log {
+    height: 420px;
+    background: url(~@/assets/login/img/ps0lazh6xd0awqpbbljpdlkifmpvz5oxsxi83cd804a-41e2-4d2a-b27f-f17604c5c9c0.png)
+      0px 0px no-repeat;
+    background-size: 486px 420px;
+    width: 418px;
+    margin: 327px 0 0 30%;
+    float: left;
+  }
   .login-form {
     position: relative;
     width: 520px;
     max-width: 100%;
-    padding: 160px 35px 0;
-    margin: 0 auto;
+    // padding: 160px 35px 0;
+    padding: 60px 35px 60px;
+    margin: 300px auto -15px -40px;
     overflow: hidden;
+    background: url(~@/assets/login/img/pslmpc2g7aif08gscxvc4sree7e8bihqgz1b38eb42-1e54-4ea9-b150-b05335419d7d.png) -15px
+      10px no-repeat;
+    background-size: 100% 100%;
+    float: left;
   }
 
   .tips {
     font-size: 14px;
-    color: #fff;
+    color: black;
     margin-bottom: 10px;
 
     span {
@@ -236,11 +267,16 @@ $light_gray: #eee;
     position: relative;
 
     .title {
+      overflow-wrap: break-word;
+      color: rgba(0, 136, 255, 1);
       font-size: 26px;
-      color: $light_gray;
-      margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;
+      font-family: PingFangSC-Medium;
+      white-space: nowrap;
+      line-height: 26px;
+      // margin: 0px auto 40px auto;
+      margin: 10px auto 90px auto;
     }
   }
 

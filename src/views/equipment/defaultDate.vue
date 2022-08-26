@@ -15,9 +15,28 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">保存</el-button>
-        <!-- <el-button @click="onCancel">Cancel</el-button> -->
       </el-form-item>
     </el-form>
+    <!-- <el-form
+      ref="form"
+      :model="form"
+      label-width="120px"
+      style="width: 500px; margin-left: 50px"
+    >
+      <el-form-item
+        v-for="item in form.list"
+        :key="item.id"
+        :label="item.description"
+      >
+        <el-input v-model="item.days" style="width: 280px" />
+        <el-button
+          type="primary"
+          @click="UpdateData(item.id, item.days)"
+          style="margin-left: 10px"
+          >修改</el-button
+        >
+      </el-form-item>
+    </el-form> -->
   </div>
 </template>
 
@@ -25,6 +44,7 @@
 import {
   maintenanceLevelList,
   updateMaintenanceLevelList,
+  updateMaintenanceLevel,
 } from "@/api/maintenance";
 
 export default {
@@ -50,6 +70,19 @@ export default {
       var list = this.form.list;
       console.log(list);
       updateMaintenanceLevelList(list).then(() => {
+        this.$notify({
+          title: "Success",
+          message: "修改成功",
+          type: "success",
+          duration: 2000,
+        });
+      });
+    },
+    UpdateData(id, days) {
+      //this.$message("submit!");
+      var obj = { id: id, days: days };
+      console.log(obj);
+      updateMaintenanceLevel(obj).then(() => {
         this.$notify({
           title: "Success",
           message: "修改成功",

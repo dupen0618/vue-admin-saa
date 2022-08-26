@@ -1,0 +1,213 @@
+.page {
+  position: relative;
+  width: 100vw;
+  height: 56.25vw;
+  overflow: hidden;
+}
+
+.box_1 {
+  height: 56.25vw;
+  background: url(./img/pszftkru67pvj44m8gcpdd0bfd2p2tilwgc14b28da-b02c-45c8-96c8-7b02041783a7.png)
+    100% no-repeat;
+  background-size: 100% 100%;
+  width: 100vw;
+}
+
+.box_2 {
+  height: 56.25vw;
+  background: url(./img/psrp1y4ko9azca4m3t0nvkiq2lrrzdb0jumce1780d1-37f2-47d4-b131-e6e59312511e.png) -0.06vw -0.06vw
+    no-repeat;
+  background-size: 100.1vw 56.35vw;
+  width: 100vw;
+  position: relative;
+}
+
+.group_1 {
+  height: 21.88vw;
+  background: url(./img/ps0lazh6xd0awqpbbljpdlkifmpvz5oxsxi83cd804a-41e2-4d2a-b27f-f17604c5c9c0.png)
+    0vw 0vw no-repeat;
+  background-size: 25.31vw 21.87vw;
+  width: 21.78vw;
+  margin: 17.03vw 0 0 29.53vw;
+}
+
+.image-wrapper_1 {
+  width: 3.13vw;
+  height: 1.25vw;
+  margin: 0.78vw 0 0 0.62vw;
+}
+
+.image_1 {
+  width: 3.13vw;
+  height: 1.25vw;
+}
+
+.text-wrapper_1 {
+  width: 10.32vw;
+  height: 0.73vw;
+  margin: 18.12vw 0 0.98vw 5.46vw;
+}
+
+.text_1 {
+  width: 10.32vw;
+  height: 0.73vw;
+  overflow-wrap: break-word;
+  color: rgba(255, 255, 255, 1);
+  font-size: 0.72vw;
+  text-align: left;
+  white-space: nowrap;
+  line-height: 0.73vw;
+}
+
+.group_2 {
+  position: absolute;
+  left: 48.29vw;
+  top: 15.37vw;
+  width: 26.15vw;
+  height: 26.46vw;
+  background: url(./img/pslmpc2g7aif08gscxvc4sree7e8bihqgz1b38eb42-1e54-4ea9-b150-b05335419d7d.png)
+    100% no-repeat;
+  background-size: 100% 100%;
+}
+
+.text_2 {
+  width: 15.94vw;
+  height: 1.31vw;
+  overflow-wrap: break-word;
+  color: rgba(0, 136, 255, 1);
+  font-size: 1.35vw;
+  font-family: PingFangSC-Medium;
+  text-align: left;
+  white-space: nowrap;
+  line-height: 1.36vw;
+  margin: 2.6vw 0 0 5.78vw;
+}
+
+.image-text_1 {
+  width: 5.32vw;
+  height: 0.99vw;
+  margin: 5.15vw 0 0 4.89vw;
+}
+
+.thumbnail_1 {
+  width: 0.73vw;
+  height: 0.99vw;
+}
+
+.text-group_1 {
+  width: 3.65vw;
+  height: 0.73vw;
+  overflow-wrap: break-word;
+  color: rgba(203, 203, 203, 1);
+  font-size: 0.72vw;
+  text-align: left;
+  white-space: nowrap;
+  line-height: 0.73vw;
+  margin-top: 0.06vw;
+}
+
+.image_2 {
+  width: 17.66vw;
+  height: 0.06vw;
+  margin: 0.31vw 0 0 4.94vw;
+}
+
+.image-text_2 {
+  width: 6.78vw;
+  height: 0.73vw;
+  margin: 1.56vw 0 0 4.89vw;
+}
+
+.thumbnail_2 {
+  width: 0.73vw;
+  height: 0.73vw;
+}
+
+.text-group_2 {
+  width: 5.11vw;
+  height: 0.73vw;
+  overflow-wrap: break-word;
+  color: rgba(203, 203, 203, 1);
+  font-size: 0.72vw;
+  text-align: left;
+  white-space: nowrap;
+  line-height: 0.73vw;
+}
+
+.image_3 {
+  width: 17.71vw;
+  height: 0.06vw;
+  margin: 0.52vw 0 0 4.89vw;
+}
+
+.box_3 {
+  width: 17.71vw;
+  height: 1.57vw;
+  margin: 0.62vw 0 0 4.89vw;
+}
+
+.image-text_3 {
+  width: 7.5vw;
+  height: 0.73vw;
+  margin-top: 0.47vw;
+}
+
+.group_3 {
+  height: 0.73vw;
+  background: url(./img/psd6y2b6u3gv7ci5er9wthj9p42jkqe78a501b52fb-134f-4f3c-afd1-e57541cb5917.png)
+    100% no-repeat;
+  background-size: 100% 100%;
+  width: 0.73vw;
+}
+
+.group_4 {
+  width: 0.58vw;
+  height: 0.37vw;
+  background: url(./img/psjce9bzi6qbmk9ncfhli8asd5qx3rue6fd3701c-50fa-4181-8190-d651e698ff16.png) -0.06vw
+    0vw no-repeat;
+  background-size: 0.62vw 0.41vw;
+  margin: 0.2vw 0 0 0.1vw;
+}
+
+.text-group_3 {
+  width: 5.84vw;
+  height: 0.73vw;
+  overflow-wrap: break-word;
+  color: rgba(203, 203, 203, 1);
+  font-size: 0.72vw;
+  text-align: left;
+  white-space: nowrap;
+  line-height: 0.73vw;
+}
+
+.image_4 {
+  width: 5.63vw;
+  height: 1.57vw;
+}
+
+.image_5 {
+  width: 17.71vw;
+  height: 0.06vw;
+  margin: 0.62vw 0 0 4.89vw;
+}
+
+.text-wrapper_2 {
+  height: 2.4vw;
+  background: url(./img/ps488k1674oel94rjeua67mhaccqjwv44ow2e10b45a-5f71-45c5-ad86-08fc42dade67.png)
+    100% no-repeat;
+  background-size: 100% 100%;
+  width: 17.71vw;
+  margin: 2.18vw 0 5.72vw 4.89vw;
+}
+
+.text_3 {
+  width: 1.88vw;
+  height: 0.89vw;
+  overflow-wrap: break-word;
+  color: rgba(255, 255, 255, 1);
+  font-size: 0.93vw;
+  text-align: center;
+  white-space: nowrap;
+  line-height: 0.94vw;
+  margin: 0.78vw 0 0 7.86vw;
+}

@@ -35,7 +35,7 @@ router.beforeEach(async(to, from, next) => {
           await store.dispatch('user/getInfo2').then(res=>{
             const roles = res.role;
             store.dispatch('GenerateRoutes', { roles }).then(() => { // 生成可访问的路由表
-              if(roles == 3){
+              if(roles == 3 || roles == 2){
                 store.dispatch('app/toggleSideBar2')
               }
               router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表

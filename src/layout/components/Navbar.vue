@@ -11,11 +11,15 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" />
+          <!-- <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" /> -->
+          <img
+            src="@/assets/login/img/psx692gd02rw8x70r1esamsizkiav2bwm2280e792-8a94-4f26-b768-d1a298e9b9a8.png"
+            class="user-avatar"
+          />
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/">
+          <!-- <router-link to="/">
             <el-dropdown-item> Home </el-dropdown-item>
           </router-link>
           <a
@@ -29,9 +33,9 @@
             href="https://panjiachen.github.io/vue-element-admin-site/#/"
           >
             <el-dropdown-item>Docs</el-dropdown-item>
-          </a>
+          </a> -->
           <el-dropdown-item divided @click.native="logout">
-            <span style="display: block">Log Out</span>
+            <span style="display: block">退出</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -52,6 +56,7 @@ export default {
   data() {
     return {
       height: "50px",
+      src: "@/assets/login/img/psx692gd02rw8x70r1esamsizkiav2bwm2280e792-8a94-4f26-b768-d1a298e9b9a8.png",
     };
   },
   computed: {
@@ -65,7 +70,7 @@ export default {
       this.$store.dispatch("app/toggleSideBar");
     },
     isSetHeightToZero() {
-      if (this.$store.getters.role == 3) {
+      if (this.$store.getters.role == 3 || this.$store.getters.role == 2) {
         this.height = "0";
       }
     },
@@ -141,6 +146,7 @@ export default {
           width: 40px;
           height: 40px;
           border-radius: 10px;
+          background-color: rgba(0, 136, 255, 1);
         }
 
         .el-icon-caret-bottom {

@@ -29,6 +29,7 @@ const routerMap = {
           if (roles == 0) return true;
           if(roles == 3 && v.path == "/dashboard"){
             v.path = "/";
+            v.children[0].path = 'dashboard'
           }
           if(roles == 1 && v.path == "/equipment"){
             v.path = "/";

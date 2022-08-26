@@ -92,7 +92,6 @@ const actions = {
         }
 
         const { name, avatar, role } = data
-        console.log("role_"+ role);
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
         commit('SET_ROLE', role)
