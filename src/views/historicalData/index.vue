@@ -135,7 +135,7 @@
 </template>
 
 <script>
-import { fetchData } from "@/api/historicalData";
+import { fetchData, reloadLines } from "@/api/historicalData";
 import { parseTime } from "@/utils";
 import pagination from "@/components/Pagination";
 import waves from "@/directive/waves"; // waves directive
@@ -173,10 +173,12 @@ export default {
       list: [],
       alarmTypeOptions,
       listLoading: false,
+      lineList: [],
     };
   },
   created() {
     this.fetchData();
+    this.reloadLines();
   },
   methods: {
     fetchData() {
@@ -190,6 +192,16 @@ export default {
     handleFilter() {
       this.listQuery.page = 1;
       this.fetchData();
+    },
+    reloadLines() {
+      reloadLines().then((res) => {
+        var list = JSON.parse(res.data);
+        var lineList = [];
+        list.forEach((element, index, array) => {
+          lineList.push(element.line);
+        });
+        this.lineList = lineList;
+      });
     },
   },
 };

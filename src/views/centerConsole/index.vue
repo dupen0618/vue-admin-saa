@@ -31,22 +31,43 @@
     <el-row :gutter="40" class="panel-group">
       <el-col :xs="12" :sm="12" :lg="4">
         <div class="block_24">
-          <div class="group_96">
-            <img
-              class="label_3"
-              referrerpolicy="no-referrer"
-              src="@/assets/centerConsole/img/ps6v02ewtftddlvz62ro59hn82i6g1ey2h02f4fb06-4532-462f-9434-8ce90c744b96.png"
-            />
+          <el-row :gutter="14" style="height: 90%">
+            <el-col :span="12" style="text-align: center">
+              <img
+                class="label_3"
+                referrerpolicy="no-referrer"
+                src="@/assets/centerConsole/img/ps6v02ewtftddlvz62ro59hn82i6g1ey2h02f4fb06-4532-462f-9434-8ce90c744b96.png"
+              />
+            </el-col>
+            <el-col
+              :span="10"
+              style="
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                text-align: right;
+              "
+            >
+              <div class="group_96_1">
+                <span class="text_44_1">{{ total }}</span>
+              </div>
+              <div class="text-wrapper_17_1">
+                <span class="text_45_1">机台总数</span>
+              </div>
+            </el-col>
+          </el-row>
+
+          <!-- <div class="group_96">
             <span class="text_44">{{ total }}</span>
           </div>
           <div class="text-wrapper_17">
             <span class="text_45">机台总数</span>
-          </div>
+          </div> -->
         </div>
       </el-col>
       <el-col :xs="12" :sm="12" :lg="4">
         <div class="block_24">
-          <div class="group_96">
+          <!-- <div class="group_96">
             <img
               class="label_3"
               referrerpolicy="no-referrer"
@@ -56,12 +77,37 @@
           </div>
           <div class="text-wrapper_17">
             <span class="text_45">正常运转</span>
-          </div>
+          </div> -->
+          <el-row :gutter="14" style="height: 90%">
+            <el-col :span="12" style="text-align: center">
+              <img
+                class="label_3"
+                referrerpolicy="no-referrer"
+                src="@/assets/centerConsole/img/psofx4glt8ixzkgxjjmzivj2doihvjd9fg4384d54b-7859-4207-a79f-269c36cf5b7f.png"
+              />
+            </el-col>
+            <el-col
+              :span="10"
+              style="
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                text-align: right;
+              "
+            >
+              <div class="group_96_1">
+                <span class="text_46_1">{{ normalCnt }}</span>
+              </div>
+              <div class="text-wrapper_17_1">
+                <span class="text_45_1">正常运转</span>
+              </div>
+            </el-col>
+          </el-row>
         </div>
       </el-col>
       <el-col :xs="12" :sm="12" :lg="4">
         <div class="block_24">
-          <div class="group_96">
+          <!-- <div class="group_96">
             <img
               class="label_3"
               referrerpolicy="no-referrer"
@@ -71,12 +117,37 @@
           </div>
           <div class="text-wrapper_17">
             <span class="text_45">异常停机</span>
-          </div>
+          </div> -->
+          <el-row :gutter="14" style="height: 90%">
+            <el-col :span="12" style="text-align: center">
+              <img
+                class="label_3"
+                referrerpolicy="no-referrer"
+                src="@/assets/centerConsole/img/pst2e1jgh67b2bdta6yzfrbxy6xga3grgfe2007fc8-c4e7-4223-9296-ef7845fc1721.png"
+              />
+            </el-col>
+            <el-col
+              :span="10"
+              style="
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                text-align: right;
+              "
+            >
+              <div class="group_96_1">
+                <span class="text_48_1">{{ alarmCnt }}</span>
+              </div>
+              <div class="text-wrapper_17_1">
+                <span class="text_45_1">异常停机</span>
+              </div>
+            </el-col>
+          </el-row>
         </div>
       </el-col>
       <el-col :xs="12" :sm="12" :lg="4">
         <div class="block_24">
-          <div class="group_96">
+          <!-- <div class="group_96">
             <img
               class="label_3"
               referrerpolicy="no-referrer"
@@ -86,12 +157,37 @@
           </div>
           <div class="text-wrapper_17">
             <span class="text_45">待机机台</span>
-          </div>
+          </div> -->
+          <el-row :gutter="14" style="height: 90%">
+            <el-col :span="12" style="text-align: center">
+              <img
+                class="label_3"
+                referrerpolicy="no-referrer"
+                src="@/assets/centerConsole/img/pscbpi28j7jit3ga31d6ie55zgcefkiol90488cd8-9589-4afe-99e5-c48ad25b3d96.png"
+              />
+            </el-col>
+            <el-col
+              :span="10"
+              style="
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                text-align: right;
+              "
+            >
+              <div class="group_96_1">
+                <span class="text_50_1">{{ otherCnt }}</span>
+              </div>
+              <div class="text-wrapper_17_1">
+                <span class="text_45_1">待机机台</span>
+              </div>
+            </el-col>
+          </el-row>
         </div>
       </el-col>
       <el-col :xs="12" :sm="12" :lg="4">
         <div class="block_24">
-          <div class="group_96">
+          <!-- <div class="group_96">
             <img
               class="label_3"
               referrerpolicy="no-referrer"
@@ -101,12 +197,38 @@
           </div>
           <div class="text-wrapper_17">
             <span class="text_45">离线机台</span>
-          </div>
+          </div> -->
+
+          <el-row :gutter="14" style="height: 90%">
+            <el-col :span="12" style="text-align: center">
+              <img
+                class="label_3"
+                referrerpolicy="no-referrer"
+                src="@/assets/centerConsole/img/ps7b4kqsji3w9xwwby1xsuw9mqq9xphqh95bd7a52-f66a-400a-a297-30e599e91b3d.png"
+              />
+            </el-col>
+            <el-col
+              :span="10"
+              style="
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                text-align: right;
+              "
+            >
+              <div class="group_96_1">
+                <span class="text_52_1">{{ offlineCnt }}</span>
+              </div>
+              <div class="text-wrapper_17_1">
+                <span class="text_45_1">离线机台</span>
+              </div>
+            </el-col>
+          </el-row>
         </div>
       </el-col>
       <el-col :xs="12" :sm="12" :lg="4">
         <div class="block_24">
-          <div class="group_96">
+          <!-- <div class="group_96">
             <img
               class="label_3"
               referrerpolicy="no-referrer"
@@ -117,7 +239,33 @@
           </div>
           <div class="text-wrapper_17">
             <span class="text_45">妥善率</span>
-          </div>
+          </div> -->
+
+          <el-row :gutter="14" style="height: 90%">
+            <el-col :span="12" style="text-align: center">
+              <img
+                class="label_3"
+                referrerpolicy="no-referrer"
+                src="@/assets/centerConsole/img/psd1socg5qxqdt6iljt6fpmw3v11lmkc8ff41c989-0454-494a-937b-b4ef458cdb48.png"
+              />
+            </el-col>
+            <el-col
+              :span="10"
+              style="
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                text-align: right;
+              "
+            >
+              <div class="group_96_1">
+                <span class="text_54_1">{{ properRate }}</span>
+              </div>
+              <div class="text-wrapper_17_1">
+                <span class="text_45_1">妥善率</span>
+              </div>
+            </el-col>
+          </el-row>
         </div>
       </el-col>
     </el-row>
@@ -136,10 +284,10 @@
             "
           >
             <el-option
-              v-for="item in calendarTypeOptions"
-              :key="item.key"
-              :label="item.display_name"
-              :value="item.key"
+              v-for="(item, index) in lineList"
+              :key="index"
+              :label="item"
+              :value="item"
             />
           </el-select>
 
@@ -180,6 +328,7 @@
                   name: 'Dashboard',
                   params: { equipmentIp: item.equipmentIp },
                 }"
+                target="_blank"
                 ><span>{{ item.equipment }}</span></router-link
               >
               <el-button :class="item.statusStyle.text1" type="text"
@@ -226,7 +375,7 @@
 </template>
 <script>
 import waves from "@/directive/waves"; // waves directive
-import { fetchData, fetchCnt } from "@/api/centerConsole";
+import { fetchData, fetchCnt, reloadLines } from "@/api/centerConsole";
 import { parseTime } from "@/utils";
 
 const calendarTypeOptions = [
@@ -286,6 +435,7 @@ export default {
         mobile: undefined,
       },
       calendarTypeOptions,
+      lineList: [],
       currentPage: 1,
       list: [],
       defaultHeight: {
@@ -311,8 +461,8 @@ export default {
     this.fetchData();
     //页面创建时执行一次getHeight进行赋值，顺道绑定resize事件
     window.addEventListener("resize", this.getHeight);
-    this.getHeight();
-
+    // this.getHeight();
+    this.reloadLines();
     this.timer = setInterval(() => {
       this.updateDateTime();
     }, 1000); //单位是毫
@@ -424,12 +574,23 @@ export default {
       console.log(this.listQuery.page);
       this.fetchData();
     },
+    reloadLines() {
+      reloadLines().then((res) => {
+        var list = JSON.parse(res.data);
+        var lineList = [];
+        list.forEach((element, index, array) => {
+          lineList.push(element.line);
+        });
+        this.lineList = lineList;
+      });
+    },
     getHeight() {
       this.defaultHeight.height = window.innerHeight - 0 + "px";
     },
     async logout() {
       await this.$store.dispatch("user/logout");
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+      // this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+      this.$router.push(`/login`);
     },
   },
   destroyed: function () {
@@ -448,7 +609,7 @@ export default {
   text-align: center;
 }
 .panel-group {
-  margin-top: 18px;
+  margin-top: 10px;
 
   .card-panel-col {
     margin-bottom: 32px;
@@ -494,7 +655,7 @@ export default {
 }
 
 .text {
-  font-size: 14px;
+  font-size: 12px;
   color: #fff;
 }
 

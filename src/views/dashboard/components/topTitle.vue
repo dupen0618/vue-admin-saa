@@ -24,9 +24,13 @@
                   name: 'DashboardSetting',
                   params: { equipmentIp: equipmentIp },
                 }"
+                target="_blank"
               >
                 <el-dropdown-item> 本地看板设置 </el-dropdown-item>
               </router-link>
+              <!-- <el-dropdown-item @click.native="goSetting">
+                本地看板设置
+              </el-dropdown-item> -->
               <el-dropdown-item divided @click.native="logout">
                 <span style="display: block">退出</span>
               </el-dropdown-item>
@@ -73,7 +77,15 @@ export default {
     },
     async logout() {
       await this.$store.dispatch("user/logout");
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+      // this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+      this.$router.push(`/login`);
+    },
+    goSetting() {
+      const newPage = this.$router.resolve({
+        name: "DashboardSetting",
+        params: { equipmentIp: this.equipmentIp },
+      });
+      window.open(newPage.href, "_blank");
     },
   },
   destroyed: function () {

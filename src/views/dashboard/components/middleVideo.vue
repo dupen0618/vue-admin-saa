@@ -23,15 +23,15 @@ export default {
     return {
       videoSource: [
         {
-          src: "https://klxxcdn.oss-cn-hangzhou.aliyuncs.com/histudy/hrm/media/bg2.mp4",
+          src: require("@/assets/dashboard/video/4eb642eaf92e75658387d11bbcd34483.mp4"),
           resolution: 360,
         },
         {
-          src: "https://klxxcdn.oss-cn-hangzhou.aliyuncs.com/histudy/hrm/media/bg2.mp4",
+          src: require("@/assets/dashboard/video/4eb642eaf92e75658387d11bbcd34483.mp4"),
           resolution: 720,
         },
         {
-          src: "https://klxxcdn.oss-cn-hangzhou.aliyuncs.com/histudy/hrm/media/bg2.mp4",
+          src: require("@/assets/dashboard/video/4eb642eaf92e75658387d11bbcd34483.mp4"),
           resolution: 1080,
         },
       ],
