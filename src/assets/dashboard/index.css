@@ -359,6 +359,19 @@
   margin: 9px 42px 0 88px;
 }
 
+.text3_letfStatus_1 {
+  width: 45%;
+  height: 14px;
+  overflow-wrap: break-word;
+  color: rgba(255, 255, 255, 1);
+  font-size: 14px;
+  font-family: SourceHanSansCN-Regular;
+  white-space: nowrap;
+  line-height: 14px;
+  text-align: center;
+  margin: 9px;
+}
+
 .box_8 {
   width: 358px;
   height: 29px;

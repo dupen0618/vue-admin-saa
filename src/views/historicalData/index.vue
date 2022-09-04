@@ -15,13 +15,16 @@
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
-      <el-input
+      <el-select
         v-model="listQuery.line"
         placeholder="线别"
-        style="width: 150px; margin-left: 5px"
+        clearable
         class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
+        style="width: 200px; margin-left: 5px"
+      >
+        <el-option v-for="(item,index) in lineList" :key="index" :label="item" :value="item" />
+      </el-select>
+
       <el-input
         v-model="listQuery.machineType"
         placeholder="机型"
@@ -44,7 +47,7 @@
         style="width: 200px; margin-left: 5px"
       >
         <el-option
-          v-for="item in alarmTypeOptions"
+          v-for="item in alarmList"
           :key="item.key"
           :label="item.display_name"
           :value="item.key"
@@ -53,13 +56,13 @@
 
       <el-date-picker
         v-model="listQuery.startTime"
-        type="date"
+        type="datetime"
         placeholder="开始时间"
         style="width: 200px; margin-left: 5px"
       />
       <el-date-picker
         v-model="listQuery.endTime"
-        type="date"
+        type="datetime"
         placeholder="结束时间"
         style="width: 200px; margin-left: 5px"
       />
@@ -71,8 +74,7 @@
         style="margin-left: 10px"
         icon="el-icon-search"
         @click="handleFilter"
-        >查询</el-button
-      >
+      >查询</el-button>
     </div>
     <el-table
       v-loading="listLoading"
@@ -84,7 +86,7 @@
       highlight-current-row
     >
       <el-table-column align="center" label="序号" width="95">
-        <template slot-scope="scope">{{ scope.$index + 1 }}</template>
+        <template slot-scope="scope">{{ scope.$index + startIndex }}</template>
       </el-table-column>
       <el-table-column label="编号" align="center">
         <template slot-scope="scope">{{ scope.row.ipAddress }}</template>
@@ -100,23 +102,13 @@
       <el-table-column label="类别" align="center">
         <template slot-scope="scope">{{ scope.row.level }}</template>
       </el-table-column>
-      <el-table-column
-        align="center"
-        prop="created_at"
-        label="开始时间"
-        width="200"
-      >
+      <el-table-column align="center" prop="created_at" label="开始时间" width="200">
         <template slot-scope="scope">
           <i class="el-icon-time" />
           <span>{{ scope.row.beginTime }}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        align="center"
-        prop="created_at"
-        label="结束时间"
-        width="200"
-      >
+      <el-table-column align="center" prop="created_at" label="结束时间" width="200">
         <template slot-scope="scope">
           <i class="el-icon-time" />
           <span>{{ scope.row.endTime }}</span>
@@ -135,22 +127,23 @@
 </template>
 
 <script>
-import { fetchData, reloadLines } from "@/api/historicalData";
+import { fetchData, reloadLines, reloadAlarmList } from "@/api/historicalData";
 import { parseTime } from "@/utils";
 import pagination from "@/components/Pagination";
 import waves from "@/directive/waves"; // waves directive
 
-const alarmTypeOptions = [
-  { key: -99, display_name: "未連線" },
-  { key: -1, display_name: "設備未開機" },
-  { key: 0, display_name: "設備待機狀態" },
-  { key: 1, display_name: "設備啟動運轉中" },
-  { key: 2, display_name: "設備異常停止中" },
-  { key: 3, display_name: "手動狀態" },
-  { key: 4, display_name: "機台暫停" },
-  { key: 5, display_name: "設備警報通知(不停機)" },
-  { key: 6, display_name: "設備保養" },
-];
+// const alarmTypeOptions = [
+//   { key: -99, display_name: "未連線" },
+//   { key: -1, display_name: "設備未開機" },
+//   { key: 0, display_name: "設備待機狀態" },
+//   { key: 1, display_name: "設備啟動運轉中" },
+//   { key: 2, display_name: "設備異常停止中" },
+//   { key: 3, display_name: "手動狀態" },
+//   { key: 4, display_name: "機台暫停" },
+//   { key: 5, display_name: "設備警報通知(不停機)" },
+//   { key: 6, display_name: "設備保養" }
+// ];
+const alarmTypeOptions = ["其他", "一般", "警告", "严重"];
 
 export default {
   components: { pagination },
@@ -168,25 +161,36 @@ export default {
         description: undefined,
         alarmType: undefined,
         startTime: undefined,
-        endTime: undefined,
+        endTime: undefined
       },
       list: [],
       alarmTypeOptions,
       listLoading: false,
       lineList: [],
+      alarmList: [],
+      startIndex: 0
     };
   },
   created() {
+    var now = new Date();
+    this.listQuery.endTime = parseTime(now);
+    var yesterday = now.setDate(now.getDate() - 1);
+    this.listQuery.startTime = parseTime(yesterday);
     this.fetchData();
     this.reloadLines();
+    this.reloadAlarmList();
   },
   methods: {
     fetchData() {
-      console.log(this.listQuery);
-      fetchData(this.listQuery).then((response) => {
+      // this.listQuery.startTime = parseTime(this.listQuery.startTime);
+      // this.listQuery.endTime = parseTime(this.listQuery.endTime);
+      this.listLoading = true;
+      fetchData(this.listQuery).then(response => {
         var json = JSON.parse(response.data);
         this.total = json.total;
         this.list = json.items;
+        this.startIndex = (this.listQuery.page - 1) * this.listQuery.limit + 1;
+        this.listLoading = false;
       });
     },
     handleFilter() {
@@ -194,7 +198,7 @@ export default {
       this.fetchData();
     },
     reloadLines() {
-      reloadLines().then((res) => {
+      reloadLines().then(res => {
         var list = JSON.parse(res.data);
         var lineList = [];
         list.forEach((element, index, array) => {
@@ -203,7 +207,22 @@ export default {
         this.lineList = lineList;
       });
     },
-  },
+    reloadAlarmList() {
+      reloadAlarmList().then(res => {
+        var list = JSON.parse(res.data);
+        console.log(list);
+        var alarmList = [{ key: -1, display_name: "全部" }];
+        list.forEach((element, index, array) => {
+          console.log(alarmTypeOptions[element.alarmType]);
+          alarmList.push({
+            key: element.alarmType,
+            display_name: alarmTypeOptions[element.alarmType]
+          });
+        });
+        this.alarmList = alarmList;
+      });
+    }
+  }
 };
 </script>
 

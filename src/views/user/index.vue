@@ -36,16 +36,14 @@
         style="margin-left: 10px"
         icon="el-icon-search"
         @click="handleFilter"
-        >查询</el-button
-      >
+      >查询</el-button>
       <el-button
         class="filter-item"
         style="margin-left: 10px"
         type="primary"
         icon="el-icon-edit"
         @click="handleCreate"
-        >新增</el-button
-      >
+      >新增</el-button>
       <!-- <el-button
         v-waves
         :loading="downloadLoading"
@@ -54,7 +52,7 @@
         icon="el-icon-upload2"
         @click="handleDownload"
         >导入</el-button
-      > -->
+      >-->
       <el-button
         v-waves
         :loading="downloadLoading"
@@ -62,8 +60,7 @@
         type="primary"
         icon="el-icon-download"
         @click="handleDownload"
-        >导出</el-button
-      >
+      >导出</el-button>
     </div>
 
     <el-table
@@ -90,23 +87,13 @@
       <el-table-column label="手机" align="center">
         <template slot-scope="scope">{{ scope.row.mobile }}</template>
       </el-table-column>
-      <el-table-column
-        align="center"
-        prop="created_at"
-        label="创建时间"
-        width="200"
-      >
+      <el-table-column align="center" prop="created_at" label="创建时间" width="200">
         <template slot-scope="scope">
           <i class="el-icon-time" />
           <span>{{ scope.row.createDate }}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        class-name="small-padding fixed-width"
-        label="操作"
-        width="200"
-        align="center"
-      >
+      <el-table-column class-name="small-padding fixed-width" label="操作" width="200" align="center">
         <template slot-scope="{ row, $index }">
           <el-row>
             <el-button
@@ -115,18 +102,14 @@
               size="small"
               icon="el-icon-edit"
               @click="handleUpdate(row)"
-            >
-              编辑
-            </el-button>
+            >编辑</el-button>
             <el-button
               v-if="true"
               type="danger"
               size="small"
               icon="el-icon-delete"
               @click="handleDelete(row.id, $index)"
-            >
-              删除
-            </el-button>
+            >删除</el-button>
           </el-row>
         </template>
       </el-table-column>
@@ -156,11 +139,7 @@
           <el-input v-model="temp.nickName" />
         </el-form-item>
         <el-form-item label="角色" prop="roleId">
-          <el-select
-            v-model="temp.roleId"
-            class="filter-item"
-            placeholder="选择用户角色"
-          >
+          <el-select v-model="temp.roleId" class="filter-item" placeholder="选择用户角色">
             <el-option
               v-for="item in roleOptions"
               :key="item.roleId"
@@ -180,13 +159,11 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false"> 取消 </el-button>
+        <el-button @click="dialogFormVisible = false">取消</el-button>
         <el-button
           type="primary"
           @click="dialogStatus === 'create' ? createData() : updateData()"
-        >
-          确认
-        </el-button>
+        >确认</el-button>
       </div>
     </el-dialog>
   </div>
@@ -198,7 +175,7 @@ import {
   roleList,
   createUser,
   updateUser,
-  deleteUser,
+  deleteUser
 } from "@/api/user";
 import waves from "@/directive/waves"; // waves directive
 import { parseTime } from "@/utils";
@@ -208,7 +185,7 @@ const calendarTypeOptions = [
   { key: "CN", display_name: "China" },
   { key: "US", display_name: "USA" },
   { key: "JP", display_name: "Japan" },
-  { key: "EU", display_name: "Eurozone" },
+  { key: "EU", display_name: "Eurozone" }
 ];
 
 export default {
@@ -219,10 +196,10 @@ export default {
       const statusMap = {
         published: "success",
         draft: "gray",
-        deleted: "danger",
+        deleted: "danger"
       };
       return statusMap[status];
-    },
+    }
   },
   data() {
     var validatePass = (rule, value, callback) => {
@@ -254,7 +231,7 @@ export default {
         startTime: "",
         endTime: "",
         nickName: undefined,
-        mobile: undefined,
+        mobile: undefined
       },
       temp: {
         id: undefined,
@@ -263,11 +240,11 @@ export default {
         roleId: undefined,
         pwd: "",
         confirmPwd: "",
-        mobile: "",
+        mobile: ""
       },
       textMap: {
         update: "编辑",
-        create: "创建",
+        create: "创建"
       },
       dialogStatus: "",
       dialogFormVisible: false,
@@ -275,23 +252,23 @@ export default {
       calendarTypeOptions,
       sortOptions: [
         { label: "ID Ascending", key: "+id" },
-        { label: "ID Descending", key: "-id" },
+        { label: "ID Descending", key: "-id" }
       ],
       roleOptions: [],
       rules: {
         userName: [
-          { required: true, message: "用户名不能为空", trigger: "blur" },
+          { required: true, message: "用户名不能为空", trigger: "blur" }
         ],
         roleId: [
-          { required: true, message: "请选择用户角色", trigger: "change" },
+          { required: true, message: "请选择用户角色", trigger: "change" }
         ],
         pwd: [{ required: true, validator: validatePass, trigger: "blur" }],
         confirmPwd: [
-          { required: true, validator: validatePass2, trigger: "blur" },
-        ],
+          { required: true, validator: validatePass2, trigger: "blur" }
+        ]
       },
       list: null,
-      downloadLoading: false,
+      downloadLoading: false
     };
   },
   created() {
@@ -301,10 +278,10 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true;
-      fetchList(this.listQuery).then((response) => {
+      fetchList(this.listQuery).then(response => {
         var json = JSON.parse(response.data);
         var list = [];
-        json.items.forEach((element) => {
+        json.items.forEach(element => {
           if (element.roleId > 0) {
             list.push(element);
           }
@@ -316,18 +293,18 @@ export default {
     },
     getRoleList() {
       this.roleOptions = [];
-      roleList().then((response) => {
+      roleList().then(response => {
         var json = response.data;
         // console.log(json);
         var options = [];
-        json.forEach(function (element, index, array) {
+        json.forEach(function(element, index, array) {
           // element: 指向当前元素的值
           // index: 指向当前索引
           // array: 指向Array对象本身
           options.push({
             roleId: element.RoleId,
             roleType: element.RoleType,
-            description: element.Description,
+            description: element.Description
           });
         });
         this.roleOptions = options;
@@ -353,22 +330,22 @@ export default {
         roleId: undefined,
         pwd: "",
         confirmPwd: "",
-        mobile: "",
+        mobile: ""
       };
     },
     createData() {
       console.log(this.temp);
-      this.$refs["dataForm"].validate((valid) => {
+      this.$refs["dataForm"].validate(valid => {
         if (valid) {
           createUser(this.temp).then(() => {
-            //this.list.unshift(this.temp);
+            // this.list.unshift(this.temp);
             this.fetchData();
             this.dialogFormVisible = false;
             this.$notify({
               title: "Success",
               message: "新建用户成功",
               type: "success",
-              duration: 2000,
+              duration: 2000
             });
           });
         }
@@ -383,18 +360,18 @@ export default {
       });
     },
     updateData() {
-      this.$refs["dataForm"].validate((valid) => {
+      this.$refs["dataForm"].validate(valid => {
         if (valid) {
           const tempData = Object.assign({}, this.temp);
           updateUser(tempData).then(() => {
-            const index = this.list.findIndex((v) => v.id === this.temp.UserId);
+            const index = this.list.findIndex(v => v.id === this.temp.UserId);
             this.list.splice(index, 1, this.temp);
             this.dialogFormVisible = false;
             this.$notify({
               title: "Success",
               message: "用户信息修改成功",
               type: "success",
-              duration: 2000,
+              duration: 2000
             });
           });
         }
@@ -406,7 +383,7 @@ export default {
           title: "Success",
           message: "删除成功",
           type: "success",
-          duration: 2000,
+          duration: 2000
         });
         this.list.splice(index, 1);
         this.total = this.list.length;
@@ -414,7 +391,7 @@ export default {
     },
     handleDownload() {
       this.downloadLoading = true;
-      import("@/vendor/Export2Excel").then((excel) => {
+      import("@/vendor/Export2Excel").then(excel => {
         const tHeader = [
           "id",
           "登录名",
@@ -422,7 +399,7 @@ export default {
           "角色",
           "手机",
           "密码",
-          "创建时间",
+          "创建时间"
         ];
         const filterVal = [
           "id",
@@ -431,20 +408,20 @@ export default {
           "description",
           "mobile",
           "pwd",
-          "createDate",
+          "createDate"
         ];
         const data = this.formatJson(filterVal);
         excel.export_json_to_excel({
           header: tHeader,
           data,
-          filename: "用户信息",
+          filename: "用户信息"
         });
         this.downloadLoading = false;
       });
     },
     formatJson(filterVal) {
-      return this.list.map((v) =>
-        filterVal.map((j) => {
+      return this.list.map(v =>
+        filterVal.map(j => {
           if (j === "timestamp") {
             return parseTime(v[j]);
           } else {
@@ -454,7 +431,7 @@ export default {
       );
     },
     confirmEdit(row) {},
-    confirmDelete(row) {},
-  },
+    confirmDelete(row) {}
+  }
 };
 </script>
