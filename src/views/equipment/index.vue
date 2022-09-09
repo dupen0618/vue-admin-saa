@@ -30,6 +30,14 @@
         @click="handleFilter"
         >查询</el-button
       >
+      <el-button
+        class="filter-item"
+        style="margin-left: 10px"
+        type="primary"
+        icon="el-icon-edit"
+        @click="handleCreate"
+        >新增</el-button
+      >
     </div>
 
     <el-table
@@ -42,10 +50,13 @@
       highlight-current-row
     >
       <el-table-column align="center" label="序号" width="95">
-        <template slot-scope="scope">{{ scope.$index }}</template>
+        <template slot-scope="scope">{{ scope.$index + startIndex }}</template>
       </el-table-column>
-      <el-table-column label="IP" align="center">
+      <el-table-column label="机台IP" align="center">
         <template slot-scope="scope">{{ scope.row.ipAddress }}</template>
+      </el-table-column>
+      <el-table-column label="机台PC的IP" align="center">
+        <template slot-scope="scope">{{ scope.row.pcIpAddress }}</template>
       </el-table-column>
       <el-table-column label="机台名称" align="center">
         <template slot-scope="scope">
@@ -66,11 +77,38 @@
           <span>{{ scope.row.createDate }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="保养级别" align="center">
+      <!-- <el-table-column label="保养级别" align="center">
         <template slot-scope="scope">{{ scope.row.description }}</template>
       </el-table-column>
       <el-table-column label="日常维护保养间隔天数" align="center">
         <template slot-scope="scope">{{ scope.row.days }}</template>
+      </el-table-column> -->
+      <el-table-column
+        class-name="small-padding fixed-width"
+        label="操作"
+        width="200"
+        align="center"
+      >
+        <template slot-scope="{ row, $index }">
+          <el-row>
+            <el-button
+              v-if="true"
+              type="success"
+              size="small"
+              icon="el-icon-edit"
+              @click="handleUpdate(row)"
+              >编辑</el-button
+            >
+            <el-button
+              v-if="true"
+              type="danger"
+              size="small"
+              icon="el-icon-delete"
+              @click="handleDelete(row.id, $index)"
+              >删除</el-button
+            >
+          </el-row>
+        </template>
       </el-table-column>
     </el-table>
 
@@ -91,34 +129,11 @@
         label-width="80px"
         style="width: 400px; margin-left: 50px"
       >
-        <el-form-item label="用户名" prop="userName">
-          <el-input v-model="temp.userName" />
+        <el-form-item label="机台IP地址" label-width="120px" prop="ipAddress">
+          <el-input v-model="temp.ipAddress" />
         </el-form-item>
-        <el-form-item label="登录名">
-          <el-input v-model="temp.nickName" />
-        </el-form-item>
-        <el-form-item label="角色" prop="roleId">
-          <el-select
-            v-model="temp.roleId"
-            class="filter-item"
-            placeholder="选择用户角色"
-          >
-            <el-option
-              v-for="item in roleOptions"
-              :key="item.roleId"
-              :label="item.description"
-              :value="item.roleId"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="手机号码">
-          <el-input v-model="temp.mobile" />
-        </el-form-item>
-        <el-form-item label="密码" prop="pwd">
-          <el-input v-model="temp.pwd" type="password" />
-        </el-form-item>
-        <el-form-item label="密码确认" prop="confirmPwd">
-          <el-input v-model="temp.confirmPwd" type="password" />
+        <el-form-item label="PC的IP地址" label-width="120px" prop="pcIpAddress">
+          <el-input v-model="temp.pcIpAddress" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -135,7 +150,14 @@
 </template>
 
 <script>
-import { fetchList } from "@/api/equipment";
+import {
+  fetchList,
+  getEquipment,
+  getEquipmentConfig,
+  createOrUpdateEquipmentConfig,
+  findEquipmentConfig,
+  deleteEquipmentConfig,
+} from "@/api/equipment";
 import waves from "@/directive/waves"; // waves directive
 import { parseTime } from "@/utils";
 import pagination from "@/components/Pagination";
@@ -161,23 +183,31 @@ export default {
     },
   },
   data() {
-    var validatePass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入密码"));
+    const validateIpAddress = (rule, value, callback) => {
+      if (value === "" || value === undefined) {
+        callback(new Error("机台的IP不能为空"));
       } else {
-        if (this.temp.confirmPwd !== "") {
-          this.$refs["dataForm"].validateField("confirmPwd");
-        }
-        callback();
+        getEquipment({ ip: value }).then((res) => {
+          var obj = res.data;
+          if (obj == null) {
+            callback(new Error("该机台的IP地址不存在"));
+          }
+          callback();
+        });
       }
     };
-    var validatePass2 = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请再次输入密码"));
-      } else if (value !== this.temp.pwd) {
-        callback(new Error("两次输入密码不一致!"));
+
+    const validatePcIpAddress = (rule, value, callback) => {
+      if (value === "" || value === undefined) {
+        callback(new Error("机台的IP不能为空"));
       } else {
-        callback();
+        getEquipmentConfig({ ip: value }).then((res) => {
+          var obj = JSON.parse(res.data);
+          if (obj != null) {
+            callback(new Error("该机台对应PC的IP地址已经存在"));
+          }
+          callback();
+        });
       }
     };
 
@@ -194,12 +224,8 @@ export default {
       },
       temp: {
         id: undefined,
-        userName: "",
-        nickName: "",
-        roleId: undefined,
-        pwd: "",
-        confirmPwd: "",
-        mobile: "",
+        ipAddress: "",
+        pcIpAddress: "",
       },
       textMap: {
         update: "编辑",
@@ -215,19 +241,16 @@ export default {
       ],
       roleOptions: [],
       rules: {
-        userName: [
-          { required: true, message: "用户名不能为空", trigger: "blur" },
+        ipAddress: [
+          { required: true, validator: validateIpAddress, trigger: "blur" },
         ],
-        roleId: [
-          { required: true, message: "请选择用户角色", trigger: "change" },
-        ],
-        pwd: [{ required: true, validator: validatePass, trigger: "blur" }],
-        confirmPwd: [
-          { required: true, validator: validatePass2, trigger: "blur" },
+        pcIpAddress: [
+          { required: true, validator: validatePcIpAddress, trigger: "blur" },
         ],
       },
       list: null,
       downloadLoading: false,
+      startIndex: 0,
     };
   },
   created() {
@@ -240,6 +263,7 @@ export default {
         var json = JSON.parse(response.data);
         this.list = json.items;
         this.total = json.total;
+        this.startIndex = (this.listQuery.page - 1) * this.listQuery.limit + 1;
         this.listLoading = false;
       });
     },
@@ -289,12 +313,13 @@ export default {
       console.log(this.temp);
       this.$refs["dataForm"].validate((valid) => {
         if (valid) {
-          createUser(this.temp).then(() => {
-            this.list.unshift(this.temp);
+          createOrUpdateEquipmentConfig(this.temp).then(() => {
+            // this.list.unshift(this.temp);
+            this.fetchData();
             this.dialogFormVisible = false;
             this.$notify({
               title: "Success",
-              message: "新建用户成功",
+              message: "新建PC与机台的IP对应关系成功",
               type: "success",
               duration: 2000,
             });
@@ -304,23 +329,30 @@ export default {
     },
     handleUpdate(row) {
       this.temp = Object.assign({}, row); // copy obj
-      this.dialogStatus = "update";
-      this.dialogFormVisible = true;
-      this.$nextTick(() => {
-        this.$refs["dataForm"].clearValidate();
+      findEquipmentConfig({ id: this.temp.id }).then((res) => {
+        var obj = res.data;
+        if (obj != null) {
+          this.dialogStatus = "update";
+          this.dialogFormVisible = true;
+          this.$nextTick(() => {
+            this.$refs["dataForm"].clearValidate();
+          });
+        } else {
+          this.$msgbox("该机台PC与机台的IP对应关系不存在，请先新增");
+        }
       });
     },
     updateData() {
       this.$refs["dataForm"].validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.temp);
-          updateUser(tempData).then(() => {
-            const index = this.list.findIndex((v) => v.id === this.temp.UserId);
-            this.list.splice(index, 1, this.temp);
+          createOrUpdateEquipmentConfig(tempData).then(() => {
+            // const index = this.list.findIndex((v) => v.id === this.temp.id);
+            this.fetchData();
             this.dialogFormVisible = false;
             this.$notify({
               title: "Success",
-              message: "用户信息修改成功",
+              message: "机台PC信息修改成功",
               type: "success",
               duration: 2000,
             });
@@ -329,15 +361,23 @@ export default {
       });
     },
     handleDelete(id, index) {
-      deleteUser(id).then(() => {
-        this.$notify({
-          title: "Success",
-          message: "删除成功",
-          type: "success",
-          duration: 2000,
-        });
-        this.list.splice(index, 1);
-        this.total = this.list.length;
+      findEquipmentConfig({ id: id }).then((res) => {
+        var obj = res.data;
+        if (obj != null) {
+          deleteEquipmentConfig({ id: id }).then(() => {
+            this.fetchData();
+            this.$notify({
+              title: "Success",
+              message: "删除成功",
+              type: "success",
+              duration: 2000,
+            });
+            // this.list.splice(index, 1);
+            // this.total = this.list.length;
+          });
+        } else {
+          this.$msgbox("该机台PC与机台的IP对应关系不存在，请先新增");
+        }
       });
     },
     handleDownload() {

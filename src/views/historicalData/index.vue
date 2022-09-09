@@ -22,7 +22,12 @@
         class="filter-item"
         style="width: 200px; margin-left: 5px"
       >
-        <el-option v-for="(item,index) in lineList" :key="index" :label="item" :value="item" />
+        <el-option
+          v-for="(item, index) in lineList"
+          :key="index"
+          :label="item.display_name"
+          :value="item.value"
+        />
       </el-select>
 
       <el-input
@@ -74,7 +79,8 @@
         style="margin-left: 10px"
         icon="el-icon-search"
         @click="handleFilter"
-      >查询</el-button>
+        >查询</el-button
+      >
     </div>
     <el-table
       v-loading="listLoading"
@@ -102,13 +108,23 @@
       <el-table-column label="类别" align="center">
         <template slot-scope="scope">{{ scope.row.level }}</template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="开始时间" width="200">
+      <el-table-column
+        align="center"
+        prop="created_at"
+        label="开始时间"
+        width="200"
+      >
         <template slot-scope="scope">
           <i class="el-icon-time" />
           <span>{{ scope.row.beginTime }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="结束时间" width="200">
+      <el-table-column
+        align="center"
+        prop="created_at"
+        label="结束时间"
+        width="200"
+      >
         <template slot-scope="scope">
           <i class="el-icon-time" />
           <span>{{ scope.row.endTime }}</span>
@@ -161,14 +177,14 @@ export default {
         description: undefined,
         alarmType: undefined,
         startTime: undefined,
-        endTime: undefined
+        endTime: undefined,
       },
       list: [],
       alarmTypeOptions,
       listLoading: false,
       lineList: [],
       alarmList: [],
-      startIndex: 0
+      startIndex: 0,
     };
   },
   created() {
@@ -185,7 +201,7 @@ export default {
       // this.listQuery.startTime = parseTime(this.listQuery.startTime);
       // this.listQuery.endTime = parseTime(this.listQuery.endTime);
       this.listLoading = true;
-      fetchData(this.listQuery).then(response => {
+      fetchData(this.listQuery).then((response) => {
         var json = JSON.parse(response.data);
         this.total = json.total;
         this.list = json.items;
@@ -198,31 +214,29 @@ export default {
       this.fetchData();
     },
     reloadLines() {
-      reloadLines().then(res => {
+      reloadLines().then((res) => {
         var list = JSON.parse(res.data);
-        var lineList = [];
+        var lineList = [{ value: "", display_name: "全部" }];
         list.forEach((element, index, array) => {
-          lineList.push(element.line);
+          lineList.push({ value: element.line, display_name: element.line });
         });
         this.lineList = lineList;
       });
     },
     reloadAlarmList() {
-      reloadAlarmList().then(res => {
+      reloadAlarmList().then((res) => {
         var list = JSON.parse(res.data);
-        console.log(list);
         var alarmList = [{ key: -1, display_name: "全部" }];
         list.forEach((element, index, array) => {
-          console.log(alarmTypeOptions[element.alarmType]);
           alarmList.push({
             key: element.alarmType,
-            display_name: alarmTypeOptions[element.alarmType]
+            display_name: alarmTypeOptions[element.alarmType],
           });
         });
         this.alarmList = alarmList;
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

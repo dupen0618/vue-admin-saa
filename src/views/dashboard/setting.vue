@@ -211,7 +211,7 @@
 </template>
 
 <script>
-import { UpdateOrCreate, ReloadProductionConfig } from "@/api/dashboard";
+import { UpdateOrCreate, reloadProductionConfig } from "@/api/dashboard";
 import { parseTime } from "@/utils";
 
 export default {
@@ -392,16 +392,17 @@ export default {
   },
   mounted() {
     this.equipmentIp = this.$route.params.equipmentIp;
-    console.log("123" + this.equipmentIp + "456");
     this.fetchData();
   },
   methods: {
     fetchData() {
-      ReloadProductionConfig({ ipAddr: this.equipmentIp }).then((response) => {
-        var json = JSON.parse(response.data);
-        console.log(json);
-        this.setForm(json);
-      });
+      reloadProductionConfig({ equipmentIp: this.equipmentIp }).then(
+        (response) => {
+          var json = JSON.parse(response.data);
+          console.log(json);
+          this.setForm(json);
+        }
+      );
     },
     onSubmit() {
       console.log("submit!");
@@ -412,7 +413,7 @@ export default {
             console.log(res);
             this.$notify({
               title: "Success",
-              message: "新建用户成功",
+              message: "修改成功",
               type: "success",
               duration: 2000,
             });

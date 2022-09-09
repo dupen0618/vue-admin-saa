@@ -9,10 +9,11 @@ export function fetchData(query) {
   });
 }
 
-export function fetchCnt() {
+export function fetchCnt(query) {
   return request({
     url: "/api/CenterConsole/fetchCnt",
     method: "get",
+    params: query,
   });
 }
 

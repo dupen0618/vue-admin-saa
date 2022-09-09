@@ -40,3 +40,39 @@ export function timeStatisticsList(query) {
     params: query,
   });
 }
+
+export function alarmFrequencyList(query) {
+  return request({
+    url: "/api/HistoricalData/alarmFrequencyList",
+    method: "post",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    params: query,
+  });
+}
+
+export function kpgAlarmList(query) {
+  return request({
+    url: "/api/HistoricalData/kpgAlarmList",
+    method: "post",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    params: query,
+  });
+}
+
+export function alarmRankingList(query) {
+  return request({
+    url: "/api/HistoricalData/alarmRankingList",
+    method: "post",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    params: query,
+  });
+}
+
+export function alarmRankingChart(query) {
+  return request({
+    url: "/api/HistoricalData/alarmRankingChart",
+    method: "post",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    params: query,
+  });
+}

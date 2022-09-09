@@ -1,4 +1,4 @@
-import { login, login2, logout, getInfo, getInfo2 } from "@/api/user";
+import { login, login2, logout, logout2, getInfo, getInfo2 } from "@/api/user";
 import { getToken, setToken, removeToken } from "@/utils/auth";
 import { resetRouter } from "@/router";
 
@@ -122,6 +122,23 @@ const actions = {
           resetRouter();
           commit("RESET_STATE");
           resolve();
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  },
+  logout2({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      logout2(state.token)
+        .then((res) => {
+          const roles = res.role;
+          store.dispatch("resetRouter", { roles }).then(() => {
+            removeToken(); // must remove  token  first
+            resetRouter();
+            commit("RESET_STATE");
+            resolve();
+          });
         })
         .catch((error) => {
           reject(error);

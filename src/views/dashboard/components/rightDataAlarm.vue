@@ -104,7 +104,7 @@
             style="margin-top: 10px"
           >
             <el-col :span="24" style="height: 85%; width: 100%">
-              <e-charts class="chart" :option="option2" />
+              <e-charts class="chart" :option="alarmFrequencyOption" />
             </el-col>
           </el-row>
         </el-card>
@@ -118,7 +118,7 @@ import splitPane from "vue-splitpane";
 
 export default {
   components: { splitPane },
-  props: ["dataAnalysis"],
+  props: ["dataAnalysis", "list", "alarmFrequencyOption"],
   computed: {
     option() {
       return {
@@ -180,6 +180,7 @@ export default {
           data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
         },
         yAxis: {
+          name: "个",
           type: "value",
         },
         series: [
@@ -195,20 +196,14 @@ export default {
   },
   name: "rightDataAlarm",
   data() {
-    return { list: null };
+    return {};
   },
-  created() {
+  mounted() {
     this.fetchData();
   },
   methods: {
     fetchData() {
-      this.list = [];
-      for (var i = 0; i < 6; i++) {
-        this.list.push({
-          createDate: "2022-08-17 14:50:55",
-          alarmInfo: "光栅报警停机",
-        });
-      }
+      console.log(this.equipmentIp + "_456");
     },
   },
 };

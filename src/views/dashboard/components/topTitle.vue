@@ -19,6 +19,7 @@
               />
             </div>
             <el-dropdown-menu slot="dropdown" class="user-dropdown">
+              <el-dropdown-item> 用户名:{{ name }} </el-dropdown-item>
               <router-link
                 :to="{
                   name: 'DashboardSetting',
@@ -55,6 +56,7 @@
 
 <script>
 import { parseTime } from "@/utils";
+import { mapGetters } from "vuex";
 
 export default {
   name: "topTitle",
@@ -64,6 +66,9 @@ export default {
       dateTime: undefined,
       timer: undefined,
     };
+  },
+  computed: {
+    ...mapGetters(["name"]),
   },
   created() {
     this.timer = setInterval(() => {

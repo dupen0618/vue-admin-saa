@@ -1,6 +1,6 @@
 <template>
   <div class="components-container">
-    <div class="filter-container">
+    <div class="filter-container" style="margin-left: 15px">
       <el-input
         v-model="listQuery.ipAddr"
         placeholder="机台编号"
@@ -22,7 +22,12 @@
         class="filter-item"
         style="width: 200px; margin-left: 5px"
       >
-        <el-option v-for="(item,index) in lineList" :key="index" :label="item" :value="item" />
+        <el-option
+          v-for="(item, index) in lineList"
+          :key="index"
+          :label="item.display_name"
+          :value="item.value"
+        />
       </el-select>
       <el-input
         v-model="listQuery.machineType"
@@ -73,39 +78,54 @@
         style="margin-left: 10px"
         icon="el-icon-search"
         @click="handleFilter"
-      >查询</el-button>
+        >查询</el-button
+      >
     </div>
-    <split-pane split="horizontal" @resize="resize">
+    <split-pane split="horizontal" @resize="resize" style="margin-left: 15px">
       <template slot="paneL">
         <div class="top-container">
           <el-table
             v-loading="listLoading"
             :data="list"
             element-loading-text="Loading"
-            style="margin-top: 50px;"
+            style="margin-top: 50px"
             height="calc(100% - 10rem)"
             border
             fit
             highlight-current-row
           >
             <el-table-column align="center" label="序号" width="95">
-              <template slot-scope="scope">{{ scope.$index + startIndex }}</template>
+              <template slot-scope="scope">{{
+                scope.$index + startIndex
+              }}</template>
             </el-table-column>
             <el-table-column label="类别" align="center">
-              <template slot-scope="scope">{{ alarmTypeOptions[scope.row.customLevel] }}</template>
+              <template slot-scope="scope">{{
+                alarmTypeOptions[scope.row.customLevel]
+              }}</template>
             </el-table-column>
             <el-table-column label="统计数" align="center">
               <template slot-scope="scope">
                 <span>{{ scope.row.cnt }}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="created_at" label="开始时间" width="200">
+            <el-table-column
+              align="center"
+              prop="created_at"
+              label="开始时间"
+              width="200"
+            >
               <template slot-scope="scope">
                 <i class="el-icon-time" />
                 <span>{{ scope.row.fromTime }}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="created_at" label="结束时间" width="200">
+            <el-table-column
+              align="center"
+              prop="created_at"
+              label="结束时间"
+              width="200"
+            >
               <template slot-scope="scope">
                 <i class="el-icon-time" />
                 <span>{{ scope.row.toTime }}</span>
@@ -140,7 +160,7 @@ import {
   reloadLines,
   reloadAlarmList,
   timeStatisticsPageList,
-  timeStatisticsList
+  timeStatisticsList,
 } from "@/api/historicalData";
 
 // const alarmTypeOptions = [
@@ -171,7 +191,7 @@ export default {
         description: undefined,
         alarmType: undefined,
         startTime: undefined,
-        endTime: undefined
+        endTime: undefined,
       },
       listLoading: true,
       list: [],
@@ -183,93 +203,93 @@ export default {
       data1: [
         {
           time: "对比项1",
-          value: 320
+          value: 320,
         },
         {
           time: "对比项2",
-          value: 332
+          value: 332,
         },
         {
           time: "对比项3",
-          value: 301
+          value: 301,
         },
         {
           time: "对比项4",
-          value: 334
+          value: 334,
         },
         {
           time: "对比项5",
-          value: 390
+          value: 390,
         },
         {
           time: "对比项6",
-          value: 401
+          value: 401,
         },
         {
           time: "对比项7",
-          value: 350
-        }
+          value: 350,
+        },
       ],
       data2: [
         {
           time: "对比项1",
-          value: 220
+          value: 220,
         },
         {
           time: "对比项4",
-          value: 182
+          value: 182,
         },
         {
           time: "对比项1",
-          value: 191
+          value: 191,
         },
         {
           time: "对比项1",
-          value: 234
+          value: 234,
         },
         {
           time: "对比项1",
-          value: 290
+          value: 290,
         },
         {
           time: "对比项1",
-          value: 201
+          value: 201,
         },
         {
           time: "对比项1",
-          value: 203
-        }
+          value: 203,
+        },
       ],
       data3: [
         {
           time: "对比项1",
-          value: 150
+          value: 150,
         },
         {
           time: "对比项4",
-          value: 232
+          value: 232,
         },
         {
           time: "对比项1",
-          value: 201
+          value: 201,
         },
         {
           time: "对比项1",
-          value: 154
+          value: 154,
         },
         {
           time: "对比项1",
-          value: 190
+          value: 190,
         },
         {
           time: "对比项1",
-          value: 150
+          value: 150,
         },
         {
           time: "对比项1",
-          value: 180
-        }
-      ]
+          value: 180,
+        },
+      ],
     };
   },
   computed: {
@@ -278,12 +298,12 @@ export default {
         tooltip: {
           trigger: "axis",
           axisPointer: {
-            type: "shadow"
-          }
+            type: "shadow",
+          },
         },
-        color: ["#c23531", "yellow", "blue"],
+        color: ["#c23531", "#f8fa2e", "#412efa"],
         legend: {
-          data: ["严重", "警告", "一般"]
+          data: ["严重", "警告", "一般"],
         },
         // toolbox: {
         //   show: true,
@@ -302,14 +322,14 @@ export default {
           {
             type: "category",
             axisTick: { show: false },
-            data: this.data1.map(e => e.time)
-          }
+            data: this.data1.map((e) => e.time),
+          },
         ],
         yAxis: [
           {
             name: "(个)",
-            type: "value"
-          }
+            type: "value",
+          },
         ],
         series: [
           {
@@ -318,31 +338,31 @@ export default {
             barGap: 0,
             // label: labelOption,
             emphasis: {
-              focus: "series"
+              focus: "series",
             },
-            data: this.data3.map(e => e.value)
+            data: this.data3.map((e) => e.value),
           },
           {
             name: "警告",
             type: "bar",
             // label: labelOption,
             emphasis: {
-              focus: "series"
+              focus: "series",
             },
-            data: this.data2.map(e => e.value)
+            data: this.data2.map((e) => e.value),
           },
           {
             name: "一般",
             type: "bar",
             // label: labelOption,
             emphasis: {
-              focus: "series"
+              focus: "series",
             },
-            data: this.data1.map(e => e.value)
-          }
-        ]
+            data: this.data1.map((e) => e.value),
+          },
+        ],
       };
-    }
+    },
   },
   created() {
     this.reloadLines();
@@ -359,7 +379,7 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true;
-      timeStatisticsPageList(this.listQuery).then(res => {
+      timeStatisticsPageList(this.listQuery).then((res) => {
         var json = JSON.parse(res.data);
         this.total = json.total;
         this.list = json.items;
@@ -371,7 +391,7 @@ export default {
       this.data1 = [];
       this.data2 = [];
       this.data3 = [];
-      timeStatisticsList(this.listQuery).then(res => {
+      timeStatisticsList(this.listQuery).then((res) => {
         var json = JSON.parse(res.data);
         json.items.forEach((element, index, array) => {
           this.setOptionData(element);
@@ -379,25 +399,25 @@ export default {
       });
     },
     setOptionData(el) {
-      if (!this.data1.some(e => e.time === el.period)) {
+      if (!this.data1.some((e) => e.time === el.period)) {
         this.data1.push({ time: el.period, value: 0 });
       }
-      if (!this.data2.some(e => e.time === el.period)) {
+      if (!this.data2.some((e) => e.time === el.period)) {
         this.data2.push({ time: el.period, value: 0 });
       }
-      if (!this.data3.some(e => e.time === el.period)) {
+      if (!this.data3.some((e) => e.time === el.period)) {
         this.data3.push({ time: el.period, value: 0 });
       }
       if (el.customLevel === 1) {
-        var index1 = this.data1.findIndex(e => e.time === el.period);
+        var index1 = this.data1.findIndex((e) => e.time === el.period);
         this.data1[index1].value = el.cnt;
       }
       if (el.customLevel === 2) {
-        var index2 = this.data2.findIndex(e => e.time === el.period);
+        var index2 = this.data2.findIndex((e) => e.time === el.period);
         this.data2[index2].value = el.cnt;
       }
       if (el.customLevel === 3) {
-        var index3 = this.data3.findIndex(e => e.time === el.period);
+        var index3 = this.data3.findIndex((e) => e.time === el.period);
         this.data3[index3].value = el.cnt;
       }
     },
@@ -407,25 +427,23 @@ export default {
       this.fetchChat();
     },
     reloadLines() {
-      reloadLines().then(res => {
+      reloadLines().then((res) => {
         var list = JSON.parse(res.data);
-        var lineList = [];
+        var lineList = [{ value: "", display_name: "全部" }];
         list.forEach((element, index, array) => {
-          lineList.push(element.line);
+          lineList.push({ value: element.line, display_name: element.line });
         });
         this.lineList = lineList;
       });
     },
     reloadAlarmList() {
-      reloadAlarmList().then(res => {
+      reloadAlarmList().then((res) => {
         var list = JSON.parse(res.data);
-        console.log(list);
         var alarmList = [{ key: -1, display_name: "全部" }];
         list.forEach((element, index, array) => {
-          console.log(alarmTypeOptions[element.alarmType]);
           alarmList.push({
             key: element.alarmType,
-            display_name: alarmTypeOptions[element.alarmType]
+            display_name: alarmTypeOptions[element.alarmType],
           });
         });
         this.alarmList = alarmList;
@@ -433,8 +451,8 @@ export default {
     },
     resize() {
       console.log("resize");
-    }
-  }
+    },
+  },
 };
 </script>
 

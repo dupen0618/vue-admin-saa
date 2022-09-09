@@ -2,7 +2,7 @@
   <div class="app-container">
     <div class="filter-container">
       <el-input
-        v-model="listQuery.nickName"
+        v-model="listQuery.ipAddress"
         placeholder="机台编号"
         style="width: 200px"
         class="filter-item"
@@ -64,14 +64,17 @@
       highlight-current-row
     >
       <el-table-column align="center" label="序号" width="95">
-        <template slot-scope="scope">{{ scope.$index }}</template>
+        <template slot-scope="scope">{{ scope.$index + startIndex }}</template>
         <!-- <template slot-scope="scope">{{ scope.row.nickName }}</template> -->
       </el-table-column>
       <el-table-column align="center" label="机台编号" width="120">
         <template slot-scope="scope">{{ scope.row.ipAddress }}</template>
       </el-table-column>
       <el-table-column label="登记时间" align="center">
-        <template slot-scope="scope">{{ scope.row.createDate }}</template>
+        <template slot-scope="scope">
+          <i class="el-icon-time" />
+          <span>{{ scope.row.modifiedDate }}</span>
+        </template>
       </el-table-column>
       <el-table-column label="日常保养间隔天数" align="center">
         <template slot-scope="scope">
@@ -79,7 +82,9 @@
         </template>
       </el-table-column>
       <el-table-column label="上一次保养日期" align="center">
-        <template slot-scope="scope">{{ scope.row.lastDate }}</template>
+        <template slot-scope="scope">{{
+          formatDate(scope.row.lastDate)
+        }}</template>
       </el-table-column>
       <el-table-column
         align="center"
@@ -88,8 +93,7 @@
         width="200"
       >
         <template slot-scope="scope">
-          <i class="el-icon-time" />
-          <span>{{ scope.row.netxtDate }}</span>
+          {{ formatDate(scope.row.nextDate) }}
         </template>
       </el-table-column>
       <el-table-column label="保养次数" align="center">
@@ -97,35 +101,6 @@
           <span>{{ scope.row.frequency }}</span>
         </template>
       </el-table-column>
-      <!-- <el-table-column
-        class-name="small-padding fixed-width"
-        label="操作"
-        width="200"
-        align="center"
-      >
-        <template slot-scope="{ row, $index }">
-          <el-row>
-            <el-button
-              v-if="true"
-              type="success"
-              size="small"
-              icon="el-icon-edit"
-              @click="handleUpdate(row)"
-            >
-              编辑
-            </el-button>
-            <el-button
-              v-if="true"
-              type="danger"
-              size="small"
-              icon="el-icon-delete"
-              @click="handleDelete(row.id, $index)"
-            >
-              删除
-            </el-button>
-          </el-row>
-        </template>
-      </el-table-column> -->
     </el-table>
 
     <pagination
@@ -148,11 +123,11 @@
         <el-form-item label="机台编号" prop="ipAddress">
           <el-input v-model="temp.ipAddress" />
         </el-form-item>
-        <el-form-item label="保养日期" prop="nextDate">
+        <el-form-item label="保养日期" prop="lastDate">
           <el-date-picker
-            v-model="temp.nextDate"
+            v-model="temp.lastDate"
             type="date"
-            placeholder="Please pick a date"
+            placeholder="请选择保养日期"
           />
         </el-form-item>
         <el-form-item label="保养周期" prop="levelId">
@@ -192,6 +167,7 @@ import {
 import waves from "@/directive/waves"; // waves directive
 import { parseTime } from "@/utils";
 import pagination from "@/components/Pagination";
+import moment from "moment";
 
 const calendarTypeOptions = [
   { key: "CN", display_name: "China" },
@@ -214,6 +190,20 @@ export default {
     },
   },
   data() {
+    const validateLastDate = (rule, value, callback) => {
+      if (value === "" || value === undefined) {
+        callback(new Error("请选择保养日期"));
+      } else {
+        let now = new Date();
+        now = new Date(parseTime(new Date(now)).substr(0, 10) + " 00:00:00");
+        let lastDate = new Date(value);
+        if (lastDate > now) {
+          callback(new Error("保养日期不能大于当前日期"));
+        }
+        callback();
+      }
+    };
+
     return {
       total: 20,
       listLoading: true,
@@ -236,6 +226,7 @@ export default {
         levelId: undefined,
         ipAddress: "",
         nextDate: new Date(),
+        lastDate: new Date(),
       },
       textMap: {
         update: "编辑",
@@ -254,11 +245,11 @@ export default {
         ipAddress: [
           { required: true, message: "设备编号不能为空", trigger: "blur" },
         ],
-        nextDate: [
+        lastDate: [
           {
             type: "date",
             required: true,
-            message: "请选择保养日期",
+            validator: validateLastDate,
             trigger: "change",
           },
         ],
@@ -268,6 +259,7 @@ export default {
       },
       list: null,
       downloadLoading: false,
+      startIndex: 0,
     };
   },
   created() {
@@ -295,6 +287,7 @@ export default {
         //   });
         // });
         this.total = json.total;
+        this.startIndex = (this.listQuery.page - 1) * this.listQuery.limit + 1;
         this.listLoading = false;
       });
     },
@@ -341,7 +334,6 @@ export default {
       };
     },
     createData() {
-      console.log(this.temp);
       this.$refs["dataForm"].validate((valid) => {
         if (valid) {
           createMaintenance(this.temp).then(() => {
@@ -350,7 +342,7 @@ export default {
             this.dialogFormVisible = false;
             this.$notify({
               title: "Success",
-              message: "新建用户成功",
+              message: "新建保养记录成功！",
               type: "success",
               duration: 2000,
             });
@@ -439,8 +431,11 @@ export default {
     },
     confirmEdit(row) {},
     confirmDelete(row) {},
-    formatDate(val) {
-      return this.$moment(timeVal).format("YYYY-MM-DD");
+    formatDate(date) {
+      if (date === undefined || date === null || date === "") {
+        return "";
+      }
+      return moment(date).format("YYYY-MM-DD");
     },
   },
 };

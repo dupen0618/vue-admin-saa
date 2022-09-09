@@ -27,8 +27,8 @@ module.exports = {
   publicPath: "/",
   outputDir: "dist",
   assetsDir: "static",
-  lintOnSave: process.env.NODE_ENV === "development",
-  // lintOnSave: process.env.NODE_ENV === 'production',
+  // lintOnSave: process.env.NODE_ENV === "development",
+  lintOnSave: process.env.NODE_ENV === "production",
   productionSourceMap: false,
   devServer: {
     port: port,
@@ -39,8 +39,8 @@ module.exports = {
     },
     proxy: {
       [process.env.VUE_APP_BASE_API]: {
-        // target: 'http://192.168.5.234:8080/',
-        target: "https://localhost:44399/",
+        target: "http://192.168.5.234:8080/",
+        // target: "https://localhost:44399/",
         ws: true,
         changeOrigin: true,
         pathRewrite: { ["^" + process.env.VUE_APP_BASE_API]: "" },

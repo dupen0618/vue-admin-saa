@@ -1,80 +1,82 @@
 <template>
   <div class="login-container">
-    <div class="login_log">
-      <div class="image-wrapper_1">
-        <img
-          class="image_1"
-          referrerpolicy="no-referrer"
-          src="~@/assets/login/img/psx692gd02rw8x70r1esamsizkiav2bwm2280e792-8a94-4f26-b768-d1a298e9b9a8.png"
-        />
-      </div>
-      <div class="text-wrapper_1">
-        <span class="text_1">版权昆山润石智能科技有限公司</span>
-      </div>
-    </div>
-
-    <el-form
-      ref="loginForm"
-      :model="loginForm"
-      :rules="loginRules"
-      class="login-form"
-      auto-complete="on"
-      label-position="left"
-    >
-      <div class="title-container">
-        <h3 class="title">SAA&nbsp;Dashboard&nbsp;数据看板</h3>
-      </div>
-
-      <el-form-item prop="username">
-        <span class="svg-container">
-          <svg-icon icon-class="user" />
-        </span>
-        <el-input
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="Username"
-          name="username"
-          type="text"
-          tabindex="1"
-          auto-complete="on"
-        />
-      </el-form-item>
-
-      <el-form-item prop="password">
-        <span class="svg-container">
-          <svg-icon icon-class="password" />
-        </span>
-        <el-input
-          :key="passwordType"
-          ref="password"
-          v-model="loginForm.password"
-          :type="passwordType"
-          placeholder="Password"
-          name="password"
-          tabindex="2"
-          auto-complete="on"
-          @keyup.enter.native="handleLogin"
-        />
-        <span class="show-pwd" @click="showPwd">
-          <svg-icon
-            :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"
+    <div class="login-box">
+      <div class="login_log">
+        <div class="image-wrapper_1">
+          <img
+            class="image_1"
+            referrerpolicy="no-referrer"
+            src="~@/assets/login/img/psx692gd02rw8x70r1esamsizkiav2bwm2280e792-8a94-4f26-b768-d1a298e9b9a8.png"
           />
-        </span>
-      </el-form-item>
-
-      <el-button
-        :loading="loading"
-        type="primary"
-        style="width: 100%; margin-bottom: 30px"
-        @click.native.prevent="handleLogin"
-        >登录</el-button
-      >
-
-      <div class="tips">
-        <span style="margin-right: 20px">username: admin</span>
-        <span>password: any</span>
+        </div>
+        <div class="text-wrapper_1">
+          <span class="text_1">版权昆山润石智能科技有限公司</span>
+        </div>
       </div>
-    </el-form>
+
+      <el-form
+        ref="loginForm"
+        :model="loginForm"
+        :rules="loginRules"
+        class="login-form"
+        auto-complete="on"
+        label-position="left"
+      >
+        <div class="title-container">
+          <h3 class="title">SAA&nbsp;Dashboard&nbsp;数据看板</h3>
+        </div>
+
+        <el-form-item prop="username">
+          <span class="svg-container">
+            <svg-icon icon-class="user" />
+          </span>
+          <el-input
+            ref="username"
+            v-model="loginForm.username"
+            placeholder="Username"
+            name="username"
+            type="text"
+            tabindex="1"
+            auto-complete="on"
+          />
+        </el-form-item>
+
+        <el-form-item prop="password">
+          <span class="svg-container">
+            <svg-icon icon-class="password" />
+          </span>
+          <el-input
+            :key="passwordType"
+            ref="password"
+            v-model="loginForm.password"
+            :type="passwordType"
+            placeholder="Password"
+            name="password"
+            tabindex="2"
+            auto-complete="on"
+            @keyup.enter.native="handleLogin"
+          />
+          <span class="show-pwd" @click="showPwd">
+            <svg-icon
+              :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"
+            />
+          </span>
+        </el-form-item>
+
+        <el-button
+          :loading="loading"
+          type="primary"
+          style="width: 100%; margin-bottom: 30px"
+          @click.native.prevent="handleLogin"
+          >登录</el-button
+        >
+
+        <div class="tips">
+          <!-- <span style="margin-right: 20px">username: admin</span>
+          <span>password: any</span> -->
+        </div>
+      </el-form>
+    </div>
   </div>
 </template>
 
@@ -86,22 +88,22 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error("Please enter the correct user name"));
+        callback(new Error("请输入正确的用户名"));
       } else {
         callback();
       }
     };
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error("The password can not be less than 6 digits"));
+        callback(new Error("密码不能少于6个字节"));
       } else {
         callback();
       }
     };
     return {
       loginForm: {
-        username: "admin",
-        password: "123456",
+        username: "",
+        password: "",
       },
       loginRules: {
         username: [
@@ -221,26 +223,25 @@ $light_gray: #eee;
   overflow: hidden;
 
   .login_log {
+    position: absolute;
     height: 420px;
+    width: 418px;
     background: url(~@/assets/login/img/ps0lazh6xd0awqpbbljpdlkifmpvz5oxsxi83cd804a-41e2-4d2a-b27f-f17604c5c9c0.png)
       0px 0px no-repeat;
     background-size: 486px 420px;
-    width: 418px;
-    margin: 327px 0 0 30%;
-    float: left;
+    margin: auto 400px auto auto;
   }
   .login-form {
-    position: relative;
+    position: absolute;
     width: 520px;
     max-width: 100%;
     // padding: 160px 35px 0;
     padding: 60px 35px 60px;
-    margin: 300px auto -15px -40px;
     overflow: hidden;
     background: url(~@/assets/login/img/pslmpc2g7aif08gscxvc4sree7e8bihqgz1b38eb42-1e54-4ea9-b150-b05335419d7d.png) -15px
       10px no-repeat;
     background-size: 100% 100%;
-    float: left;
+    margin: auto auto auto 400px;
   }
 
   .tips {
@@ -288,6 +289,20 @@ $light_gray: #eee;
     color: $dark_gray;
     cursor: pointer;
     user-select: none;
+  }
+
+  .login-box {
+    width: 1000px;
+    height: 600px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 </style>

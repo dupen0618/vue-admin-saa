@@ -8,7 +8,11 @@
         <span class="text_3">AIOT中控台</span>
       </el-col>
       <el-col :span="8" class="top_group">
-        <el-dropdown class="avatar-container" style="float: right" trigger="click">
+        <el-dropdown
+          class="avatar-container"
+          style="float: right"
+          trigger="click"
+        >
           <div class="avatar-wrapper">
             <img
               class="label_1"
@@ -17,6 +21,7 @@
             />
           </div>
           <el-dropdown-menu slot="dropdown" class="user-dropdown">
+            <el-dropdown-item> 用户名:{{ name }} </el-dropdown-item>
             <el-dropdown-item divided @click.native="logout">
               <span style="display: block">退出</span>
             </el-dropdown-item>
@@ -26,7 +31,11 @@
     </el-row>
     <el-row :gutter="40" class="panel-group">
       <el-col :xs="12" :sm="12" :lg="4">
-        <div class="block_24">
+        <div
+          class="block_24"
+          :class="{ active: 100 == isActive }"
+          @click="show(100)"
+        >
           <el-row :gutter="14" style="height: 90%">
             <el-col :span="12" style="text-align: center">
               <img
@@ -52,28 +61,14 @@
               </div>
             </el-col>
           </el-row>
-
-          <!-- <div class="group_96">
-            <span class="text_44">{{ total }}</span>
-          </div>
-          <div class="text-wrapper_17">
-            <span class="text_45">机台总数</span>
-          </div>-->
         </div>
       </el-col>
       <el-col :xs="12" :sm="12" :lg="4">
-        <div class="block_24">
-          <!-- <div class="group_96">
-            <img
-              class="label_3"
-              referrerpolicy="no-referrer"
-              src="@/assets/centerConsole/img/psofx4glt8ixzkgxjjmzivj2doihvjd9fg4384d54b-7859-4207-a79f-269c36cf5b7f.png"
-            />
-            <span class="text_46">{{ normalCnt }}</span>
-          </div>
-          <div class="text-wrapper_17">
-            <span class="text_45">正常运转</span>
-          </div>-->
+        <div
+          class="block_24"
+          :class="{ active: 1 == isActive }"
+          @click="show(1)"
+        >
           <el-row :gutter="14" style="height: 90%">
             <el-col :span="12" style="text-align: center">
               <img
@@ -102,18 +97,11 @@
         </div>
       </el-col>
       <el-col :xs="12" :sm="12" :lg="4">
-        <div class="block_24">
-          <!-- <div class="group_96">
-            <img
-              class="label_3"
-              referrerpolicy="no-referrer"
-              src="@/assets/centerConsole/img/pst2e1jgh67b2bdta6yzfrbxy6xga3grgfe2007fc8-c4e7-4223-9296-ef7845fc1721.png"
-            />
-            <span class="text_48">{{ alarmCnt }}</span>
-          </div>
-          <div class="text-wrapper_17">
-            <span class="text_45">异常停机</span>
-          </div>-->
+        <div
+          class="block_24"
+          :class="{ active: 2 == isActive }"
+          @click="show(2)"
+        >
           <el-row :gutter="14" style="height: 90%">
             <el-col :span="12" style="text-align: center">
               <img
@@ -142,18 +130,11 @@
         </div>
       </el-col>
       <el-col :xs="12" :sm="12" :lg="4">
-        <div class="block_24">
-          <!-- <div class="group_96">
-            <img
-              class="label_3"
-              referrerpolicy="no-referrer"
-              src="@/assets/centerConsole/img/pscbpi28j7jit3ga31d6ie55zgcefkiol90488cd8-9589-4afe-99e5-c48ad25b3d96.png"
-            />
-            <span class="text_50">{{ otherCnt }}</span>
-          </div>
-          <div class="text-wrapper_17">
-            <span class="text_45">待机机台</span>
-          </div>-->
+        <div
+          class="block_24"
+          :class="{ active: 0 == isActive }"
+          @click="show(0)"
+        >
           <el-row :gutter="14" style="height: 90%">
             <el-col :span="12" style="text-align: center">
               <img
@@ -172,7 +153,7 @@
               "
             >
               <div class="group_96_1">
-                <span class="text_50_1">{{ otherCnt }}</span>
+                <span class="text_50_1">{{ waitingCnt }}</span>
               </div>
               <div class="text-wrapper_17_1">
                 <span class="text_45_1">待机机台</span>
@@ -182,19 +163,11 @@
         </div>
       </el-col>
       <el-col :xs="12" :sm="12" :lg="4">
-        <div class="block_24">
-          <!-- <div class="group_96">
-            <img
-              class="label_3"
-              referrerpolicy="no-referrer"
-              src="@/assets/centerConsole/img/ps7b4kqsji3w9xwwby1xsuw9mqq9xphqh95bd7a52-f66a-400a-a297-30e599e91b3d.png"
-            />
-            <span class="text_52">{{ offlineCnt }}</span>
-          </div>
-          <div class="text-wrapper_17">
-            <span class="text_45">离线机台</span>
-          </div>-->
-
+        <div
+          class="block_24"
+          :class="{ active: -99 == isActive }"
+          @click="show(-99)"
+        >
           <el-row :gutter="14" style="height: 90%">
             <el-col :span="12" style="text-align: center">
               <img
@@ -224,19 +197,6 @@
       </el-col>
       <el-col :xs="12" :sm="12" :lg="4">
         <div class="block_24">
-          <!-- <div class="group_96">
-            <img
-              class="label_3"
-              referrerpolicy="no-referrer"
-              src="@/assets/centerConsole/img/psd1socg5qxqdt6iljt6fpmw3v11lmkc8ff41c989-0454-494a-937b-b4ef458cdb48.png"
-            />
-            <span class="text_54">{{ properRate }}</span>
-            <span class="text_55">%</span>
-          </div>
-          <div class="text-wrapper_17">
-            <span class="text_45">妥善率</span>
-          </div>-->
-
           <el-row :gutter="14" style="height: 90%">
             <el-col :span="12" style="text-align: center">
               <img
@@ -279,7 +239,12 @@
               background-color: rgba(9, 84, 168, 0.28);
             "
           >
-            <el-option v-for="(item, index) in lineList" :key="index" :label="item" :value="item" />
+            <el-option
+              v-for="(item, index) in lineList"
+              :key="index"
+              :label="item.display_name"
+              :value="item.value"
+            />
           </el-select>
 
           <el-input
@@ -299,7 +264,8 @@
             icon="el-icon-search"
             style="margin-left: 30px"
             @click="handleFilter"
-          >查询</el-button>
+            >查询</el-button
+          >
         </el-col>
       </el-row>
       <el-row :gutter="10" style="margin: 0 0 0 0">
@@ -342,7 +308,11 @@
               </div>
             </div>
             <div style="float: right; height: 100%">
-              <img class="image_13" referrerpolicy="no-referrer" :src="item.statusStyle.imgUrl" />
+              <img
+                class="image_13"
+                referrerpolicy="no-referrer"
+                :src="item.statusStyle.imgUrl"
+              />
             </div>
           </el-card>
         </el-col>
@@ -367,12 +337,13 @@
 import waves from "@/directive/waves"; // waves directive
 import { fetchData, fetchCnt, reloadLines } from "@/api/centerConsole";
 import { parseTime } from "@/utils";
+import { mapGetters } from "vuex";
 
 const calendarTypeOptions = [
   { key: "A", display_name: "A区" },
   { key: "B", display_name: "B区" },
   { key: "C", display_name: "C区" },
-  { key: "D", display_name: "D区" }
+  { key: "D", display_name: "D区" },
 ];
 
 /**
@@ -389,7 +360,7 @@ const imgUrls = {
   offline:
     "psyly3uxmyinojpnkirgj5w3a14tx3kptq5896fcc0-feec-4dbb-a9d0-d217b0469116.png",
   other:
-    "psfb5o3tlls88bd9r6dawtfgisgkpje3sv20ae384d-4843-4a72-aa55-e0d2d706cfdc.png"
+    "psfb5o3tlls88bd9r6dawtfgisgkpje3sv20ae384d-4843-4a72-aa55-e0d2d706cfdc.png",
 };
 
 // const statusName = ["normal", "alarm", "offline", "other"];
@@ -402,7 +373,7 @@ const statusName2 = {
   3: "other",
   4: "other",
   5: "alarm",
-  6: "other"
+  6: "other",
 };
 
 export default {
@@ -412,7 +383,7 @@ export default {
       dateTime: undefined,
       constants: {},
       form: {
-        region: ""
+        region: "",
       },
       listQuery: {
         page: 1,
@@ -422,14 +393,14 @@ export default {
         partition: undefined,
         machineNo: undefined,
         type: undefined,
-        mobile: undefined
+        mobile: undefined,
       },
       calendarTypeOptions,
       lineList: [],
       currentPage: 1,
       list: [],
       defaultHeight: {
-        height: ""
+        height: "",
       },
       timer: undefined,
       total: 100,
@@ -437,14 +408,21 @@ export default {
       alarmCnt: 0,
       offlineCnt: 0,
       otherCnt: 0,
+      waitingCnt: 0,
       properRate: 0,
       cntList: {
         normalCnt: 0,
         alarmCnt: 0,
         offlineCnt: 0,
-        otherCnt: 0
-      }
+        otherCnt: 0,
+        waitingCnt: 0,
+      },
+      isActive: 101,
+      tempList: [],
     };
+  },
+  computed: {
+    ...mapGetters(["name"]),
   },
   created() {
     this.fetchCnt();
@@ -459,7 +437,7 @@ export default {
   },
   methods: {
     fetchCnt() {
-      fetchCnt().then(response => {
+      fetchCnt(this.listQuery).then((response) => {
         var list = JSON.parse(response.data);
         this.initCntList();
         list.forEach((element, index, array) => {
@@ -469,30 +447,36 @@ export default {
         this.normalCnt = this.cntList.normalCnt;
         this.alarmCnt = this.cntList.alarmCnt;
         this.offlineCnt = this.cntList.offlineCnt;
-        this.otherCnt = this.cntList.otherCnt;
+        this.waitingCnt = this.cntList.waitingCnt;
         this.properRate =
           ((this.normalCnt * 1.0) / this.total).toFixed(2) * 100;
       });
     },
     fetchData() {
-      fetchData(this.listQuery).then(response => {
+      fetchData(this.listQuery).then((response) => {
         var json = JSON.parse(response.data);
         this.total = json.total;
-        var list = [];
-        json.items.forEach((element, index, array) => {
-          var obj = {
-            equipmentIp: element.ipAddr,
-            equipment: element.equipment,
-            made: element.made,
-            lineBody: element.lineBody,
-            summary: element.summary,
-            status: this.setStatus(element.status),
-            statusStyle: this.setStyle(element.status)
-          };
-          list.push(obj);
-        });
-        this.list = list;
+        this.tempList = json.items;
+
+        this.list = this.setEquipmentCard(json.items);
       });
+    },
+    setEquipmentCard(items) {
+      var list = [];
+
+      items.forEach((element, index, array) => {
+        var obj = {
+          equipmentIp: element.ipAddr,
+          equipment: element.equipment,
+          made: element.made,
+          lineBody: element.lineBody,
+          summary: element.summary,
+          status: this.setStatus(element.status),
+          statusStyle: this.setStyle(element.status),
+        };
+        list.push(obj);
+      });
+      return list;
     },
     updateDateTime() {
       var now = new Date();
@@ -503,7 +487,8 @@ export default {
         normalCnt: 0,
         alarmCnt: 0,
         offlineCnt: 0,
-        otherCnt: 0
+        waitingCnt: 0,
+        otherCnt: 0,
       };
     },
     setStatus(val) {
@@ -512,11 +497,11 @@ export default {
         return "未連線";
       }
       if (val === -1) {
-        this.cntList.offlineCnt++;
+        // this.cntList.offlineCnt++;
         return "設備未開機";
       }
       if (val === 0) {
-        this.cntList.otherCnt++;
+        this.cntList.waitingCnt++;
         return "設備待機狀態";
       }
       if (val === 1) {
@@ -528,19 +513,19 @@ export default {
         return "設備異常停止中";
       }
       if (val === 3) {
-        this.cntList.otherCnt++;
+        // this.cntList.otherCnt++;
         return "手動狀態";
       }
       if (val === 4) {
-        this.cntList.otherCnt++;
+        // this.cntList.otherCnt++;
         return "機台暫停";
       }
       if (val === 5) {
-        this.cntList.alarmCnt++;
+        // this.cntList.alarmCnt++;
         return "設備警報通知(不停機)";
       }
       if (val === 6) {
-        this.cntList.otherCnt++;
+        // this.cntList.otherCnt++;
         return "設備保養";
       }
       return val;
@@ -552,12 +537,14 @@ export default {
         text1: "text-" + style,
         icon1: "el-icon-" + style + " el-icon--right",
         icon2: "el-icon-" + style + "_1 el-icon--left",
-        imgUrl: require("@/assets/centerConsole/img/" + imgUrls[style])
+        imgUrl: require("@/assets/centerConsole/img/" + imgUrls[style]),
       };
     },
     handleFilter() {
       this.listQuery.page = 1;
+      this.isActive = 101;
       this.fetchData();
+      this.fetchCnt();
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
@@ -568,11 +555,11 @@ export default {
       this.fetchData();
     },
     reloadLines() {
-      reloadLines().then(res => {
+      reloadLines().then((res) => {
         var list = JSON.parse(res.data);
-        var lineList = [];
+        var lineList = [{ display_name: "全部", value: "" }];
         list.forEach((element, index, array) => {
-          lineList.push(element.line);
+          lineList.push({ display_name: element.line, value: element.line });
         });
         this.lineList = lineList;
       });
@@ -580,21 +567,35 @@ export default {
     getHeight() {
       this.defaultHeight.height = window.innerHeight - 0 + "px";
     },
+    show(val) {
+      this.isActive = val;
+      let items = this.tempList;
+      let list = [];
+      if (val == 100) {
+        list = items;
+      } else {
+        list = items.filter((item) => item.status == val && val != 100);
+      }
+      this.list = this.setEquipmentCard(list);
+    },
     async logout() {
       await this.$store.dispatch("user/logout");
       // this.$router.push(`/login?redirect=${this.$route.fullPath}`);
       this.$router.push(`/login`);
-    }
+    },
   },
-  destroyed: function() {
+  destroyed: function () {
     // 每次离开当前界面时，清除定时器
     clearInterval(this.timer);
     this.timer = null;
-  }
+  },
 };
 </script>
 <style scoped lang="css" src="@/assets/centerConsole/index.css" />
 <style lang="scss" scoped>
+.active {
+  border: 2px solid red;
+}
 .top_group {
   margin: 22px 0 0 0;
 }
